@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "540349469655",
+    "project_id": "nchat-f013f",
+    "storage_bucket": "nchat-f013f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540349469655:android:64b2dafd0bed24127a3192",
+        "android_client_info": {
+          "package_name": "com.example.cyberchat1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0XQwhK9mOGwGlp97-84kf0rxmGA0QFb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540349469655:android:22d10fbcadc38aab7a3192",
+        "android_client_info": {
+          "package_name": "com.example.nchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0XQwhK9mOGwGlp97-84kf0rxmGA0QFb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
