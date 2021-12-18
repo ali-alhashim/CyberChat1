@@ -27,7 +27,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
+     lateinit var navController: NavController
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -247,7 +247,10 @@ class RegisterFragment : Fragment() {
 
                     Log.d(TAG,"you saved your Mobile number and user UID in CyberChatSharedPreferences with $MOBILNUMBER and user UID : $userID")
 
+
                     val user = task.result?.user
+                    //go to chat list
+                    MainActivity().navController.navigate(R.id.action_splashFragment_to_chatListFragment)
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d(TAG, "signInWithCredential:failure", task.exception)
