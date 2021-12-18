@@ -1,13 +1,18 @@
 package com.example.cyberchat1
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
@@ -28,6 +33,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        //--------------------Request Permission
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    CONTEXT_INCLUDE_CODE)
+
+
+
+                // REQUEST_CODE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
+        //----------------------------
 
 
         //---navController
@@ -51,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", 0)
 
         val UserUID_preferences:String = MySharedPreferences.getString("UserUID","null").toString()
-        val mobileNumber_preferences:String = MySharedPreferences.getString("deviceNumber","null").toString()
+        val mobileNumber_preferences:String = MySharedPreferences.getString("PhoneNumber","null").toString()
 
 
         Log.d(TAG,"this first check before if condition for UserUID : " +UserUID_preferences)
@@ -86,7 +120,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    }
+    }//end onCreate fun
+
+
+
+
+
+
+
+
+
 
     // function to enable user go back
     override fun onSupportNavigateUp(): Boolean {

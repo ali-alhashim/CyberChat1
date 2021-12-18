@@ -239,10 +239,10 @@ class RegisterFragment : Fragment() {
                     var userID = auth.currentUser?.uid
 
                     //save the data
-                    MySharedPreferences.edit().putString("deviceNumber",MOBILNUMBER)
-                    MySharedPreferences.edit().putString("UserUID",userID)
+                    MySharedPreferences.edit().putString("PhoneNumber",MOBILNUMBER).commit()
+                    MySharedPreferences.edit().putString("UserUID",userID).commit()
 
-                    MySharedPreferences.edit().apply()
+
 
 
                     Log.d(TAG,"you saved your Mobile number and user UID in CyberChatSharedPreferences with $MOBILNUMBER and user UID : $userID")
