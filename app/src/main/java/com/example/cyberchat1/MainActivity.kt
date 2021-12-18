@@ -2,6 +2,7 @@ package com.example.cyberchat1
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,23 +43,23 @@ class MainActivity : AppCompatActivity() {
         // first check if this device is already registered
         // if the device is registered open chat list fragment
         // else open register fragment
-        // connect to firebase lookup for saved token with mobile number in Share preferences
+        // connect to firebase lookup for saved UserUID with mobile number in Share preferences
         //-----------------------------------------------------------------------------------------
 
 
 
-        val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", MODE_PRIVATE)
+        val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", Context.MODE_PRIVATE)
 
-        val token_preferences:String = MySharedPreferences.getString("deviceToken",null).toString()
+        val UserUID_preferences:String = MySharedPreferences.getString("UserUID",null).toString()
         val mobileNumber_preferences:String = MySharedPreferences.getString("deviceNumber",null).toString()
 
 
-        Log.d(TAG,"this first check before if condition for token : " +token_preferences)
+        Log.d(TAG,"this first check before if condition for UserUID : " +UserUID_preferences)
         Log.d(TAG,"this first check before if condition for Mobile Number : " +mobileNumber_preferences)
 
         // check if null go to register fragment
 
-        if(token_preferences =="null")
+        if(UserUID_preferences =="null")
         {
             Log.d(TAG,"open fragment register")
 
@@ -75,8 +76,8 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG,"Already  register check if correct open chat list if not login again")
             // check if the credential is correct
 
-
-
+            Log.d(TAG,"you saved Mobile Number is : $mobileNumber_preferences")
+            Log.d(TAG,"you saved User UID is : $UserUID_preferences")
             //go to chat list
             navController.navigate(R.id.action_splashFragment_to_chatListFragment)
         }

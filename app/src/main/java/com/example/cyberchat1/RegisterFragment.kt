@@ -1,6 +1,8 @@
 package com.example.cyberchat1
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.SharedPreferences
 import android.icu.util.TimeUnit
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.snackbar.Snackbar
@@ -29,7 +33,7 @@ class RegisterFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     // [END declare_auth]
     private var SMSCODE :String=""
-
+    private var MOBILNUMBER : String = ""
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     private var storedVerificationId: String? = ""
@@ -96,6 +100,9 @@ class RegisterFragment : Fragment() {
         val userPhoneNumber:EditText = view.findViewById(R.id.editTextPhone)
         val countryCode : CountryCodePicker = view.findViewById(R.id.country_code_picker)
         val smsCode :EditText = view.findViewById(R.id.editTextSMScode)
+        val progressBar : ProgressBar = view.findViewById(R.id.progressBar)
+
+        progressBar.visibility = ProgressBar.INVISIBLE
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -141,7 +148,7 @@ class RegisterFragment : Fragment() {
                 storedVerificationId = verificationId
                 resendToken = token
 
-
+                 progressBar.visibility = ProgressBar.INVISIBLE
 
             }
 
@@ -162,6 +169,9 @@ class RegisterFragment : Fragment() {
             //function to send full mobile number to firebase
             startPhoneNumberVerification(countryCode.fullNumberWithPlus +userPhoneNumber.text.toString())
 
+            MOBILNUMBER =countryCode.fullNumberWithPlus +userPhoneNumber.text.toString()
+
+            progressBar.visibility = ProgressBar.VISIBLE
 
         }
 //------------------end send button action
@@ -189,6 +199,10 @@ class RegisterFragment : Fragment() {
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
         Log.d(TAG,"you credential = $credential")
         // [END verify_with_code]
+
+        //test--
+        signInWithPhoneAuthCredential(credential)
+        Log.d(TAG,"login -------------------->>>>>>>>>")
     }
 
 
@@ -215,6 +229,22 @@ class RegisterFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
+
+                    // now in firebase there is Identifier and User UID we need to save this in local storage Share Pre.
+
+                    val MySharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("CyberChatSharedPreferences",  Context.MODE_PRIVATE)
+
+
+                    //get current user uid
+                    var userID = auth.currentUser?.uid
+
+                    //save the data
+                    MySharedPreferences.edit().putString("deviceNumber",MOBILNUMBER)
+                    MySharedPreferences.edit().putString("UserUID",userID)
+
+                    MySharedPreferences.edit().commit()
+
+                    Log.d(TAG,"you saved your Mobile number and user UID in CyberChatSharedPreferences with $MOBILNUMBER and user UID : $userID")
 
                     val user = task.result?.user
                 } else {
