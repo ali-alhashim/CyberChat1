@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", Context.MODE_PRIVATE)
+        val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", 0)
 
-        val UserUID_preferences:String = MySharedPreferences.getString("UserUID",null).toString()
-        val mobileNumber_preferences:String = MySharedPreferences.getString("deviceNumber",null).toString()
+        val UserUID_preferences:String = MySharedPreferences.getString("UserUID","null").toString()
+        val mobileNumber_preferences:String = MySharedPreferences.getString("deviceNumber","null").toString()
 
 
         Log.d(TAG,"this first check before if condition for UserUID : " +UserUID_preferences)

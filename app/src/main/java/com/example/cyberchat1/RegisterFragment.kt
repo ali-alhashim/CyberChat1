@@ -232,7 +232,7 @@ class RegisterFragment : Fragment() {
 
                     // now in firebase there is Identifier and User UID we need to save this in local storage Share Pre.
 
-                    val MySharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("CyberChatSharedPreferences",  Context.MODE_PRIVATE)
+                    val MySharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("CyberChatSharedPreferences", 0)
 
 
                     //get current user uid
@@ -242,7 +242,8 @@ class RegisterFragment : Fragment() {
                     MySharedPreferences.edit().putString("deviceNumber",MOBILNUMBER)
                     MySharedPreferences.edit().putString("UserUID",userID)
 
-                    MySharedPreferences.edit().commit()
+                    MySharedPreferences.edit().apply()
+
 
                     Log.d(TAG,"you saved your Mobile number and user UID in CyberChatSharedPreferences with $MOBILNUMBER and user UID : $userID")
 
