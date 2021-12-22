@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.cyberchat1.RegisterFragment"
+        android:name="com.example.cyberchat1.fragment.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.cyberchat1.SplashFragment"
+        android:name="com.example.cyberchat1.fragment.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/MainFragment"
-        android:name="com.example.cyberchat1.MainFragment"
+        android:name="com.example.cyberchat1.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -39,17 +39,17 @@
     </fragment>
     <fragment
         android:id="@+id/chatListFragment"
-        android:name="com.example.cyberchat1.ChatListFragment"
+        android:name="com.example.cyberchat1.fragment.ChatListFragment"
         android:label="fragment_chat_list"
         tools:layout="@layout/fragment_chat_list" />
     <fragment
         android:id="@+id/statusFragment"
-        android:name="com.example.cyberchat1.StatusFragment"
+        android:name="com.example.cyberchat1.fragment.StatusFragment"
         android:label="fragment_status"
         tools:layout="@layout/fragment_status" />
     <fragment
         android:id="@+id/callsFragment"
-        android:name="com.example.cyberchat1.CallsFragment"
+        android:name="com.example.cyberchat1.fragment.CallsFragment"
         android:label="fragment_calls"
         tools:layout="@layout/fragment_calls" />
 </navigation>

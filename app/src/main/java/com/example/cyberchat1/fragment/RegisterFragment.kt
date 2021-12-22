@@ -1,9 +1,7 @@
-package com.example.cyberchat1
+package com.example.cyberchat1.fragment
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.SharedPreferences
-import android.icu.util.TimeUnit
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,7 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
+import com.example.cyberchat1.activity.MainActivity
+import com.example.cyberchat1.R
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.android.material.snackbar.Snackbar
@@ -23,8 +22,6 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hbb20.CountryCodePicker
-import javax.xml.datatype.DatatypeConstants.SECONDS
-import kotlin.time.DurationUnit
 
 
 class RegisterFragment : Fragment() {

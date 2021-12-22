@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".fragment.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill">
+
+
 
 
         <com.google.android.material.tabs.TabItem
@@ -39,12 +41,19 @@
             android:text="CALLS" />
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.example.cyberchat1.ChatListFragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:background="@color/browser_actions_title_color"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+
+        android:background="#716A6A">
+
+        <androidx.viewpager.widget.PagerTitleStrip
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top" />
+
+    </androidx.viewpager.widget.ViewPager>
 </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -56,6 +65,7 @@
         android:clickable="true"
         android:src="@android:drawable/ic_menu_send"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
