@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cyberchat1.R
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
@@ -98,7 +99,12 @@ class MainActivity : AppCompatActivity() {
         else
         {
             Log.d(TAG,"Already  register check if correct open chat list if not login again")
+
+
             // check if the credential is correct
+
+
+
 
             Log.d(TAG,"you saved Mobile Number is : $mobileNumber_preferences")
             Log.d(TAG,"you saved User UID is : $UserUID_preferences")

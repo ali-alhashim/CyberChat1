@@ -11,4 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">UserName</string>
+    <string name="last_message_in_the_chat_here">Last Message in the chat here</string>
+    <string name="_9_10_pm">9:10 PM</string>
 </resources>
