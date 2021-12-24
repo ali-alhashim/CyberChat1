@@ -19,6 +19,7 @@
         <com.hbb20.CountryCodePicker
             app:ccp_hintExampleNumber="true"
             app:ccp_autoDetectCountry="true"
+            app:ccp_defaultNameCode="SA"
             android:id="@+id/country_code_picker"
             android:clickable="true"
             android:focusable="true"

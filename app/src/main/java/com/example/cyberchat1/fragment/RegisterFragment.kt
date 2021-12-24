@@ -99,6 +99,12 @@ class RegisterFragment : Fragment() {
         val smsCode :EditText = view.findViewById(R.id.editTextSMScode)
         val progressBar : ProgressBar = view.findViewById(R.id.progressBar)
 
+
+
+        registerBtn.visibility = Button.INVISIBLE
+        smsCode.visibility = EditText.INVISIBLE
+
+
         progressBar.visibility = ProgressBar.INVISIBLE
 
         // [START initialize_auth]
@@ -146,6 +152,9 @@ class RegisterFragment : Fragment() {
                 resendToken = token
 
                  progressBar.visibility = ProgressBar.INVISIBLE
+
+                 registerBtn.visibility = Button.VISIBLE
+                 smsCode.visibility = EditText.VISIBLE
 
             }
 
@@ -238,6 +247,7 @@ class RegisterFragment : Fragment() {
                     //save the data
                     MySharedPreferences.edit().putString("PhoneNumber",MOBILNUMBER).commit()
                     MySharedPreferences.edit().putString("UserUID",userID).commit()
+                    MySharedPreferences.edit().putString("User_Credential",credential.toString()).commit()
 
 
 
@@ -247,7 +257,7 @@ class RegisterFragment : Fragment() {
 
                     val user = task.result?.user
                     //go to chat list
-                    MainActivity().navController.navigate(R.id.action_splashFragment_to_chatListFragment)
+                    MainActivity.navController.navigate(R.id.action_splashFragment_to_chatListFragment)
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d(TAG, "signInWithCredential:failure", task.exception)
