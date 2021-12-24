@@ -1,15 +1,20 @@
 package com.example.cyberchat1.fragment
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
-
+import com.example.cyberchat1.adapters.ContactListAdapter
+import com.example.cyberchat1.model.ContactsModel
 
 
 class SelectContactToStartChat : Fragment() {
+
+    private val contactList = mutableListOf<ContactsModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,21 @@ class SelectContactToStartChat : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_select_contact_to_start_chat, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val contactListRecyclerView :RecyclerView = view.findViewById(R.id.contactListRecyclerView)
+
+
+        contactList.add(ContactsModel("ali",null,"0547078933",null,null))
+        contactList.add(ContactsModel("Naji",null,"0560999557",null,null))
+
+
+
+        contactListRecyclerView.adapter = ContactListAdapter(contactList)
+
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.cyberchat1.model
 
-class Messages
+class MessagesModel
     (
     var from:String,
     var message:String,
