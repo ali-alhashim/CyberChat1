@@ -40,12 +40,52 @@ class SelectContactToStartChat : Fragment() {
 
         val contactListRecyclerView :RecyclerView = view.findViewById(R.id.contactListRecyclerView)
 
+
+        // Get All contacts -----------------------------------------------
         //val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+        val contactsCursor = requireActivity().contentResolver?.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            null,
+            null,
+            null,
+            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+
+        // check if you get all contact
+        if (contactsCursor != null && contactsCursor.count > 0)
+        {
+            // get index for column name
+            val nameIndex = contactsCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+
+            // get index for column phone number
+           // val phoneNoIndex = contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+
+
+            contactsCursor?.use {                      // loop through the cursor
+                while (it.moveToNext())
+                {
+                    // loop for all contact last
+
+                    val contactName = it.getString(nameIndex)
+                   // val contactPhoneNo = it.getString(phoneNoIndex)
+
+                    if (contactName != null /*&& contactPhoneNo != null*/)
+                    {
+                        contactList.add(ContactsModel( contactName, null,  /*contactPhoneNo*/null, null, null))
+
+
+                    }
+
+
+                }
+            }
+
+            contactsCursor.close()
+        }
+
+        //-------------------------------------------------------------------------
 
 
 
-        contactList.add(ContactsModel("ali",null,"0547078933",null,null))
-        contactList.add(ContactsModel("Naji",null,"0560999557",null,null))
 
 
 
