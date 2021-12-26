@@ -1,6 +1,8 @@
 package com.example.cyberchat1.fragment
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
-class SplashFragment : Fragment(), CoroutineScope {
+class HomeFragment : Fragment(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext get() = Dispatchers.Main + Job()
 
@@ -25,7 +27,16 @@ class SplashFragment : Fragment(), CoroutineScope {
         inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle? ): View?
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Log.d(TAG,"Splash Fragment Start")
+
+
     }
 
 

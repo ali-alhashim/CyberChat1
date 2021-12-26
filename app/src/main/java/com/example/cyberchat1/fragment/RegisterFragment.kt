@@ -257,7 +257,7 @@ class RegisterFragment : Fragment() {
 
                     val user = task.result?.user
                     //go to chat list
-                    MainActivity.navController.navigate(R.id.action_splashFragment_to_chatListFragment)
+                    MainActivity.navController.navigate(R.id.action_registerFragment_to_MainFragment)
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d(TAG, "signInWithCredential:failure", task.exception)
