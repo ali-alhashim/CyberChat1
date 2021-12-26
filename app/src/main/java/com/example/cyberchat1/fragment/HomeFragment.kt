@@ -34,7 +34,7 @@ class HomeFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG,"Splash Fragment Start")
+        Log.d(TAG,"Home Fragment Start")
 
 
     }
