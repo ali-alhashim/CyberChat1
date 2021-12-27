@@ -65,11 +65,14 @@ class SelectContactToStartChat : Fragment() {
 
         // Get All contacts -----------------------------------------------
         //val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
+        // CONTENT_FILTER_URI
+        val selection = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " LIKE ?";
+        val selectionArguments = arrayOf("%ALI%")
         val contactsCursor = requireActivity().contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
              null,
-              null ,
-            null,
+            selection ,
+            selectionArguments,
                null)
 
         // check if you get all contact
