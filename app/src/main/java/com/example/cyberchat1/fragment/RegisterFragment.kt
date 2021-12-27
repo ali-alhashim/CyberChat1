@@ -27,7 +27,7 @@ import com.hbb20.CountryCodePicker
 class RegisterFragment : Fragment() {
 
     // [START declare_auth]
-    private lateinit var auth: FirebaseAuth
+   // private lateinit var auth: FirebaseAuth
     // [END declare_auth]
     private var SMSCODE :String=""
     private var MOBILNUMBER : String = ""
@@ -110,7 +110,7 @@ class RegisterFragment : Fragment() {
 
         // [START initialize_auth]
         // Initialize Firebase Auth
-        auth = Firebase.auth
+        //MainActivity.auth = Firebase.auth
         // [END initialize_auth]
 
 
@@ -218,7 +218,7 @@ class RegisterFragment : Fragment() {
         Log.d(TAG,"you call PhoneAuthProvider for: $phoneNumber")
 
         // [START start_phone_auth]
-        val options = PhoneAuthOptions.newBuilder(auth)
+        val options = PhoneAuthOptions.newBuilder(MainActivity.auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(60L, java.util.concurrent.TimeUnit.SECONDS) // Timeout and unit
             .setActivity(requireActivity())                 // Activity (for callback binding)
@@ -231,7 +231,7 @@ class RegisterFragment : Fragment() {
 
     // [START sign_in_with_phone]
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
+        MainActivity.auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
@@ -243,7 +243,7 @@ class RegisterFragment : Fragment() {
 
 
                     //get current user uid
-                    var userID = auth.currentUser?.uid
+                    var userID = MainActivity.auth.currentUser?.uid
 
                     //save the data
                     MySharedPreferences.edit().putString("PhoneNumber",MOBILNUMBER).commit()

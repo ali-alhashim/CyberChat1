@@ -13,7 +13,10 @@ import com.example.cyberchat1.R
 import com.example.cyberchat1.adapters.ContactListAdapter
 import com.example.cyberchat1.model.ContactsModel
 import android.content.ContentResolver
+import android.content.ContentValues.TAG
 import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
 import android.widget.EditText
 import android.widget.TextSwitcher
 
@@ -41,6 +44,18 @@ class SelectContactToStartChat : Fragment() {
         val contactListRecyclerView :RecyclerView = view.findViewById(R.id.contactListRecyclerView)
 
         val searchContactEditText : EditText = view.findViewById(R.id.searchContactEditText)
+
+
+        // search action ---------------------------------------------------------------------
+        searchContactEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if ( event.action == KeyEvent.ACTION_UP) {
+                //Perform Code
+                    Log.d(TAG,"you Enter the following ${searchContactEditText.text}")
+                return@OnKeyListener true
+            }
+            false
+        })
+        //--------------------------------------------------------------------------------------
 
 
         // Get All contacts -----------------------------------------------
@@ -79,6 +94,9 @@ class SelectContactToStartChat : Fragment() {
 
                     if (contactName != null)
                     {
+
+
+
                         contactList.add(ContactsModel( contactName, null,  contactPhoneNo,null, null))
 
 
