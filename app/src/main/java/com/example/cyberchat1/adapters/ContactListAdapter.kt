@@ -1,6 +1,8 @@
 package com.example.cyberchat1.adapters
 
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ class ContactListAdapter(val contacts : List<ContactsModel>) :RecyclerView.Adapt
     {
         val contactName : TextView = view.findViewById(R.id.contactNameTxt)
         val contactPhone : TextView = view.findViewById(R.id.userPhoneTxt)
+        val contactLayoutContainer : View = view.findViewById(R.id.contactLayoutContainer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,6 +32,15 @@ class ContactListAdapter(val contacts : List<ContactsModel>) :RecyclerView.Adapt
         val contact = contacts[position]
         holder.contactName.text = contact.uname
         holder.contactPhone.text = contact.phoneNumber
+
+        holder.contactLayoutContainer.setOnClickListener{
+            Log.d(TAG,"you Clicked on   ${holder.contactName.text}")
+        }
+
+
+
+
+
     }
 
     override fun getItemCount(): Int {

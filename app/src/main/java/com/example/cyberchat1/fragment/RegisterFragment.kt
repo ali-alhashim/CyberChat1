@@ -60,13 +60,14 @@ class RegisterFragment : Fragment() {
 
         /*
         -- Executing tasks: [signingreport] in project --Valid until: Friday, October 20, 2051
+        you need to open firebase Console and add these keys finger print this not static from device to anther will be different
         you run : signingreport from right corner by gradle you will have fingerprint of your application
         SHA1: B3:A9:97:F1:1D:38:1D:16:57:D4:15:94:3B:92:D5:0B:F0:BF:73:DB
         SHA-256: 49:ED:61:DB:41:E3:49:2F:02:08:0F:C6:79:77:6D:BB:5B:F0:6B:A7:14:F7:79:93:E5:48:F6:E1:AF:F8:28:E9
 
          */
-
-        //SafetyNet  ------------------------------Credentials Key = AIzaSyBLRo0G7-n830__uYCQqS2NWWp1y2_M5OM
+         // you must change your own API KEY from your google cloud
+        //SafetyNet  ------------------------------Google Cloud API firebase check Key = AIzaSyBLRo0G7-n830__uYCQqS2NWWp1y2_M5OM
         val nonce =byteArrayOfInts(0xA1, 0x2E, 0x38, 0xD4, 0x89, 0xC3)
         SafetyNet.getClient(requireActivity()).attest(nonce, "AIzaSyBLRo0G7-n830__uYCQqS2NWWp1y2_M5OM")
             .addOnSuccessListener(requireActivity()) {
@@ -274,9 +275,9 @@ class RegisterFragment : Fragment() {
     // [END sign_in_with_phone]
 
 
-    private fun updateUI(user: FirebaseUser? = auth.currentUser) {
+    //rivate fun updateUI(user: FirebaseUser? = auth.currentUser) {
 
-    }
+  //  }
 
 
 }//end class
