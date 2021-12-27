@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.cyberchat1.R
+import com.example.cyberchat1.activity.MainActivity
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -38,6 +39,8 @@ class HomeFragment : Fragment(), CoroutineScope {
 
 
     }
+
+
 
 
 

@@ -14,6 +14,8 @@ import com.example.cyberchat1.adapters.ContactListAdapter
 import com.example.cyberchat1.model.ContactsModel
 import android.content.ContentResolver
 import android.content.ContentValues.TAG
+import android.provider.UserDictionary
+import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
@@ -47,13 +49,16 @@ class SelectContactToStartChat : Fragment() {
 
 
         // search action ---------------------------------------------------------------------
-        searchContactEditText.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if ( event.action == KeyEvent.ACTION_UP) {
-                //Perform Code
-                    Log.d(TAG,"you Enter the following ${searchContactEditText.text}")
-                return@OnKeyListener true
+        searchContactEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
             }
-            false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d(TAG,"you Enter the following ${searchContactEditText.text}")
+            }
         })
         //--------------------------------------------------------------------------------------
 
@@ -62,10 +67,10 @@ class SelectContactToStartChat : Fragment() {
         //val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
         val contactsCursor = requireActivity().contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+             null,
+              null ,
             null,
-            null,
-            null,
-                        null)
+               null)
 
         // check if you get all contact
         if (contactsCursor != null && contactsCursor.count > 0)

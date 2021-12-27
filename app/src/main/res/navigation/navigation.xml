@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.cyberchat1.fragment.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.cyberchat1.fragment.HomeFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_home" >
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_splashFragment_to_chatListFragment"
             app:destination="@id/MainFragment"
@@ -31,8 +31,8 @@
     <fragment
         android:id="@+id/MainFragment"
         android:name="com.example.cyberchat1.fragment.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="Main"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_MainFragment_to_chatListFragment"
             app:destination="@id/chatListFragment" />
@@ -54,8 +54,8 @@
     <fragment
         android:id="@+id/chatListFragment"
         android:name="com.example.cyberchat1.fragment.ChatListFragment"
-        android:label="fragment_chat_list"
-        tools:layout="@layout/fragment_chat_list" >
+        android:label="Chat List"
+        tools:layout="@layout/fragment_chat_list">
         <action
             android:id="@+id/action_chatListFragment_to_selectContactToStartChat"
             app:destination="@id/selectContactToStartChat" />
@@ -63,12 +63,12 @@
     <fragment
         android:id="@+id/statusFragment"
         android:name="com.example.cyberchat1.fragment.StatusFragment"
-        android:label="fragment_status"
+        android:label="Status"
         tools:layout="@layout/fragment_status" />
     <fragment
         android:id="@+id/callsFragment"
         android:name="com.example.cyberchat1.fragment.CallsFragment"
-        android:label="fragment_calls"
+        android:label="Calls"
         tools:layout="@layout/fragment_calls" />
     <action
         android:id="@+id/action_global_chatListFragment"
@@ -78,6 +78,6 @@
     <fragment
         android:id="@+id/selectContactToStartChat"
         android:name="com.example.cyberchat1.fragment.SelectContactToStartChat"
-        android:label="fragment_select_contact_to_start_chat"
+        android:label="Select Contact"
         tools:layout="@layout/fragment_select_contact_to_start_chat" />
 </navigation>
