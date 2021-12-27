@@ -27,6 +27,8 @@ class SelectContactToStartChat : Fragment() {
 
     private val contactList = mutableListOf<ContactsModel>()
 
+    private lateinit var  contactListRecyclerView :RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,9 +45,12 @@ class SelectContactToStartChat : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val contactListRecyclerView :RecyclerView = view.findViewById(R.id.contactListRecyclerView)
+        contactListRecyclerView = view.findViewById(R.id.contactListRecyclerView)
 
         val searchContactEditText : EditText = view.findViewById(R.id.searchContactEditText)
+
+        // call for first time without filter
+        getContactList("")
 
 
         // search action ---------------------------------------------------------------------
@@ -58,22 +63,42 @@ class SelectContactToStartChat : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.d(TAG,"you Enter the following ${searchContactEditText.text}")
+
+                // call get contact list with search
+                getContactList(searchContactEditText.text.toString())
             }
         })
         //--------------------------------------------------------------------------------------
 
 
+
+
+
+
+
+
+    }
+
+    fun getContactList(searchWord:String?)
+    {
+        // clear the list
+        contactList.clear()
+
+
+        Log.d(TAG,"you call getContactList function with search $searchWord")
+
         // Get All contacts -----------------------------------------------
         //val projection = arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)
         // CONTENT_FILTER_URI
         val selection = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " LIKE ?";
-        val selectionArguments = arrayOf("%ALI%")
+        val selectionArguments = arrayOf("%${searchWord}%")
         val contactsCursor = requireActivity().contentResolver?.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-             null,
+            null,
             selection ,
             selectionArguments,
-               null)
+            null)
+
 
         // check if you get all contact
         if (contactsCursor != null && contactsCursor.count > 0)
@@ -85,7 +110,7 @@ class SelectContactToStartChat : Fragment() {
 
 
 
-             val phoneNoIndex = contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val phoneNoIndex = contactsCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
 
 
 
@@ -127,6 +152,7 @@ class SelectContactToStartChat : Fragment() {
         contactListRecyclerView.adapter = ContactListAdapter(contactList)
 
 
+        ContactListAdapter(contactList).notifyDataSetChanged()
 
 
 
