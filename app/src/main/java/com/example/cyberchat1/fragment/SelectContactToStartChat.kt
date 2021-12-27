@@ -21,6 +21,9 @@ import android.util.Log
 import android.view.KeyEvent
 import android.widget.EditText
 import android.widget.TextSwitcher
+import com.example.cyberchat1.activity.MainActivity
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 
 
 class SelectContactToStartChat : Fragment() {
@@ -128,7 +131,9 @@ class SelectContactToStartChat : Fragment() {
                     if (contactName != null)
                     {
 
+                        //before you add to list check if the phone no as register in firebase or not
 
+                        //if( PhoneAuthProvider.PHONE_SIGN_IN_METHOD)
 
                         contactList.add(ContactsModel( contactName, null,  contactPhoneNo,null, null))
 
@@ -157,7 +162,7 @@ class SelectContactToStartChat : Fragment() {
 
 
 
-    }
+    } // end get contact list function
 
 
 
