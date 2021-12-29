@@ -1,5 +1,6 @@
 package com.example.cyberchat1.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.os.Handler
 import android.view.WindowManager
 import com.example.cyberchat1.R
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

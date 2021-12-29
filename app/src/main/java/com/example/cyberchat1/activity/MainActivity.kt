@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     companion object
     {
         lateinit var auth : FirebaseAuth
+        @SuppressLint("StaticFieldLeak")
         lateinit var navController: NavController
     }
 

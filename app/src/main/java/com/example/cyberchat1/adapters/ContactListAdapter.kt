@@ -2,16 +2,20 @@ package com.example.cyberchat1.adapters
 
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+import com.example.cyberchat1.activity.ChatActivity
 import com.example.cyberchat1.model.ContactsModel
 
-class ContactListAdapter(val contacts : List<ContactsModel>) :RecyclerView.Adapter<ContactListAdapter.MyViewHolder>() {
+class ContactListAdapter(private val contacts : List<ContactsModel>, val context:Context) :RecyclerView.Adapter<ContactListAdapter.MyViewHolder>() {
 
 
 
@@ -35,6 +39,12 @@ class ContactListAdapter(val contacts : List<ContactsModel>) :RecyclerView.Adapt
 
         holder.contactLayoutContainer.setOnClickListener{
             Log.d(TAG,"you Clicked on   ${holder.contactName.text}")
+
+            //go to chat activity and send contact name and mobile
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra("ContactName", holder.contactName.text.toString())
+            intent.putExtra("PhoneNumber", holder.contactPhone.text .toString())
+            context.startActivity(intent)
         }
 
 

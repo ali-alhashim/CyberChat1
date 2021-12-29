@@ -1,5 +1,6 @@
 package com.example.cyberchat1.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 
 import android.provider.ContactsContract
@@ -82,6 +83,7 @@ class SelectContactToStartChat : Fragment() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun getContactList(searchWord:String?)
     {
         // clear the list
@@ -154,10 +156,10 @@ class SelectContactToStartChat : Fragment() {
 
 
 
-        contactListRecyclerView.adapter = ContactListAdapter(contactList)
+        contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
 
 
-        ContactListAdapter(contactList).notifyDataSetChanged()
+        ContactListAdapter(contactList,requireContext()).notifyDataSetChanged()
 
 
 
