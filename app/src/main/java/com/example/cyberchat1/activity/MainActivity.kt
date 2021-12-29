@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth : FirebaseAuth
         @SuppressLint("StaticFieldLeak")
         lateinit var navController: NavController
+
+        lateinit var CurrentPhoneNumber : String
     }
 
 
@@ -169,6 +171,8 @@ class MainActivity : AppCompatActivity() {
 
            // auth.signInWithCredential(myCredential)
 
+            // set after you check he is really the owner of this mobile number
+            CurrentPhoneNumber = mobileNumber_preferences
 
             //go to chat list
             navController.navigate(R.id.action_splashFragment_to_chatListFragment)
