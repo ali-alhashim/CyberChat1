@@ -9,10 +9,20 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+import com.example.cyberchat1.model.MessagesModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class ChatActivity : AppCompatActivity() {
+
+    private lateinit var  textMessage : EditText
+    private lateinit var   recyclerViewMessages : RecyclerView
+    private lateinit var    contactPhoneChat :TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,32 +32,48 @@ class ChatActivity : AppCompatActivity() {
 
 
         val contactNameChat : TextView = findViewById(R.id.contactNameChat)
-        val contactPhoneChat :TextView = findViewById(R.id.contactPhoneChat)
-        val recyclerViewMessages : RecyclerView = findViewById(R.id.recyclerViewMessages)
         val sendMessageButton : FloatingActionButton =findViewById(R.id.sendMessageButton)
-        val textMessage : EditText = findViewById(R.id.textMessage)
+
+        contactPhoneChat= findViewById(R.id.contactPhoneChat)
+        recyclerViewMessages= findViewById(R.id.recyclerViewMessages)
+        textMessage = findViewById(R.id.textMessage)
 
 
+        // get the parameter from selected contact
         val extras = intent.extras
-
         if(extras !=null)
         {
             //set contact name and phone number for top bar
             contactNameChat.text = extras.getString("ContactName")
             contactPhoneChat.text =extras.getString("PhoneNumber")
         }
+        //--
 
+        // send button action ----
         sendMessageButton.setOnClickListener{
             Log.d("TAG","you click on send button with message ${textMessage.text} ")
 
-            /*
-            * Now we need current phone number
-            * to phone number
-            * message text
-            * */
+            // call function for send message
 
-            //last clear the message text box
-            textMessage.setText(" ")
+            sendMessage()
         }
+        // --
+    }
+
+    private fun sendMessage()
+    {
+
+
+        val messageSender : String  = MainActivity.CurrentPhoneNumber
+        val messageReceiver : String =  contactPhoneChat.text.toString()
+        // format for time and date
+        val simpleTimeFormat = SimpleDateFormat("HH:mm:ss")
+        val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+        // init time and date
+        val currentTime: String = simpleTimeFormat.format(Date())
+        val currentDate: String = simpleDateFormat.format((Date()))
+
+        // init message model
+        val messageModel = MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,"unique key ",currentTime,currentDate,"URL for File","online")
     }
 }

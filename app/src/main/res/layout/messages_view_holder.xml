@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rvLayout"
+        >
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvReciverMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+
+            android:background="@drawable/receiver_message_layout"
+            android:elevation="2dp"
+            android:padding="5dp"
+            android:text="Reciver Message Here"
+            android:textColor="@color/black" />
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSenderMessage"
+            android:text="Sender Message Here"
+            android:elevation="2dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+
+            android:background="@drawable/sender_message_layout"
+            android:layout_alignParentRight="true" />
+
+
+
+
+    </RelativeLayout></layout>
