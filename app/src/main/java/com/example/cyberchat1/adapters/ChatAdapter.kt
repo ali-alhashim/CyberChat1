@@ -3,15 +3,18 @@ package com.example.cyberchat1.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+import com.example.cyberchat1.model.MessagesModel
 
 // class name       parameter list type          inherit RecyclerAdapter
-class ChatAdapter(val messages:List<String>) : RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {
+class ChatAdapter(val messages:List<MessagesModel>) : RecyclerView.Adapter<ChatAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view)
     {
-
+            val senderMessage : TextView = view.findViewById(R.id.senderMessage)
+            val receiverMessage : TextView = view.findViewById(R.id.receiverMessage)
     }
 
 
@@ -25,10 +28,15 @@ class ChatAdapter(val messages:List<String>) : RecyclerView.Adapter<ChatAdapter.
 
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+         return messages.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
+        // get the messages from firebase and view it on the layout
+
+        holder.receiverMessage.text = messages[position].message
+
+
     }
 }

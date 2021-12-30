@@ -14,4 +14,6 @@
     <string name="username">UserName</string>
     <string name="last_message_in_the_chat_here">Last Message in the chat here</string>
     <string name="_9_10_pm">9:10 PM</string>
+    <string name="receiver_message_here">Receiver Message Here</string>
+    <string name="sender_message_here">Sender Message Here</string>
 </resources>

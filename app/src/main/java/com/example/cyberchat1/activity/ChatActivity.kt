@@ -1,20 +1,21 @@
 package com.example.cyberchat1.activity
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Window
-import android.view.WindowManager
+
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+import com.example.cyberchat1.adapters.ChatAdapter
+
 import com.example.cyberchat1.model.MessagesModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.w3c.dom.Text
+
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 import java.util.*
 
 class ChatActivity : AppCompatActivity() {
@@ -22,6 +23,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var  textMessage : EditText
     private lateinit var   recyclerViewMessages : RecyclerView
     private lateinit var    contactPhoneChat :TextView
+
+    private val MessagesList = mutableListOf<MessagesModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +59,13 @@ class ChatActivity : AppCompatActivity() {
             // call function for send message
 
             sendMessage()
+
+            textMessage.setText("")
         }
         // --
     }
 
+    @SuppressLint("NotifyDataSetChanged", "SimpleDateFormat")
     private fun sendMessage()
     {
 
@@ -73,7 +79,13 @@ class ChatActivity : AppCompatActivity() {
         val currentTime: String = simpleTimeFormat.format(Date())
         val currentDate: String = simpleDateFormat.format((Date()))
 
-        // init message model
-        val messageModel = MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,"unique key ",currentTime,currentDate,"URL for File","online")
+        // add message to message list
+        MessagesList.add(MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,"unique key ",currentTime,currentDate,"URL for File","online"))
+
+        recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+
+
+        ChatAdapter(MessagesList).notifyDataSetChanged()
+
     }
 }
