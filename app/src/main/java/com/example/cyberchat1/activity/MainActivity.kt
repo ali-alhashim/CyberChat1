@@ -142,8 +142,9 @@ class MainActivity : AppCompatActivity() {
         val User_Credential : String = MySharedPreferences.getString("User_Credential", "null").toString()
 
 
-        Log.d(TAG,"this first check before if condition for UserUID : " +UserUID_preferences)
-        Log.d(TAG,"this first check before if condition for Mobile Number : " +mobileNumber_preferences)
+        Log.d(TAG,"this first check before if condition for UserUID : $UserUID_preferences")
+
+        Log.d(TAG,"this first check before if condition for Mobile Number : $mobileNumber_preferences" )
 
         // check if null go to register fragment
 

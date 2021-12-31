@@ -99,12 +99,10 @@ class ChatActivity : AppCompatActivity() {
 
         // send to firebase++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-        db.getReference("messages").child(messageID).child("from").setValue(messageSender)
-        db.getReference("messages").child(messageID).child("to").setValue(messageReceiver)
-        db.getReference("messages").child(messageID).child("message").setValue(textMessage.text.toString())
-        db.getReference("messages").child(messageID).child("date").setValue(currentDate)
-        db.getReference("messages").child(messageID).child("time").setValue(currentTime)
-        db.getReference("messages").child(messageID).child("status").setValue("sent")
+        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("message").setValue(textMessage.text.toString())
+        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("date").setValue(currentDate)
+        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("time").setValue(currentTime)
+        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("status").setValue("sent")
 
         Log.d(TAG,"you push to firebase new message with ID ${messageID}")
         // end end to firebase+++++++++++++++++++++++++++++++++++++++++++++++++++++++
