@@ -8,21 +8,23 @@
     tools:context=".activity.ChatActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
 
+        android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="279dp">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:background="#B9D7EF"
             android:id="@+id/contactLayoutContainer"
-            android:padding="5dp"
+            android:layout_width="match_parent"
 
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:background="#B9D7EF"
+            android:orientation="horizontal"
+
+            android:padding="5dp">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -40,7 +42,6 @@
                     app:civ_border_width="1dp" />
 
 
-
             </FrameLayout>
 
             <LinearLayout
@@ -56,17 +57,17 @@
                     android:id="@+id/contactNameChat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contact Name"
-                    android:textStyle="bold"
+                    android:text="@string/contact_name"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/contactPhoneChat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="0547078933"
+                    android:text="@string/_0547078933"
                     android:textColor="#000000"
                     android:textSize="12sp" />
 
@@ -75,8 +76,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
+                    android:text="@string/online"
                     android:textColor="@color/black"
-                    android:text="online"
                     android:textSize="12sp"
                     tools:ignore="RtlHardcoded">
 
@@ -86,24 +87,28 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:layout_marginBottom="65dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="3dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:id="@+id/recyclerViewMessages"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-    android:layout_margin="3dp"
-    android:layout_height="match_parent">
-
-</androidx.recyclerview.widget.RecyclerView>
-
+           />
 
     </LinearLayout>
+
+
+
+
+
+
 
     <EditText
         android:id="@+id/textMessage"
@@ -117,19 +122,24 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Enter Your Message..."
+        android:hint="@string/enter_your_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/sendMessageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="13dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_send" />
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:contentDescription="@string/send"
+        android:focusable="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

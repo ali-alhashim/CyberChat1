@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth : FirebaseAuth
         @SuppressLint("StaticFieldLeak")
         lateinit var navController: NavController
-        private lateinit var db: FirebaseDatabase
+
         lateinit var CurrentPhoneNumber : String
     }
 
@@ -49,8 +49,7 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-        // Initialize Realtime Database
-        db = Firebase.database
+
 
 
         //---navController
