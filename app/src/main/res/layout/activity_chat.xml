@@ -107,6 +107,9 @@
 
     <EditText
         android:id="@+id/textMessage"
+        android:background="@drawable/edit_text_shadow"
+        android:padding="10dp"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

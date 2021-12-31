@@ -13,8 +13,9 @@ class ChatAdapter(val messages:List<MessagesModel>) : RecyclerView.Adapter<ChatA
 
     inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view)
     {
-            val senderMessage : TextView = view.findViewById(R.id.senderMessage)
-            val receiverMessage : TextView = view.findViewById(R.id.receiverMessage)
+            val messageTextView : TextView = view.findViewById(R.id.messageTextView)
+            val messengerTextViewNameAndNumber : TextView = view.findViewById(R.id.messengerTextViewNameAndNumber)
+
     }
 
 
@@ -33,9 +34,10 @@ class ChatAdapter(val messages:List<MessagesModel>) : RecyclerView.Adapter<ChatA
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        // get the messages from firebase and view it on the layout
 
-        holder.receiverMessage.text = messages[position].message
+
+        holder.messageTextView.text = messages[position].message
+        holder.messengerTextViewNameAndNumber.text = messages[position].from + " " + messages[position].date + " " + messages[position].time
 
 
     }

@@ -16,6 +16,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cyberchat1.R
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth : FirebaseAuth
         @SuppressLint("StaticFieldLeak")
         lateinit var navController: NavController
-
+        private lateinit var db: FirebaseDatabase
         lateinit var CurrentPhoneNumber : String
     }
 
@@ -41,9 +44,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
          Log.d(TAG,"MainActivity Start ----")
 
-        // inti Firebase Auth
+        // Initialize Firebase Auth
 
         auth = FirebaseAuth.getInstance()
+
+
+        // Initialize Realtime Database
+        db = Firebase.database
 
 
         //---navController

@@ -26,6 +26,7 @@ class ChatActivity : AppCompatActivity() {
 
     private val MessagesList = mutableListOf<MessagesModel>()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,6 +61,11 @@ class ChatActivity : AppCompatActivity() {
 
             sendMessage()
 
+            recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+
+
+            ChatAdapter(MessagesList).notifyDataSetChanged()
+
             textMessage.setText("")
         }
         // --
@@ -78,14 +84,12 @@ class ChatActivity : AppCompatActivity() {
         // init time and date
         val currentTime: String = simpleTimeFormat.format(Date())
         val currentDate: String = simpleDateFormat.format((Date()))
+        val messageID : String = ""
 
         // add message to message list
-        MessagesList.add(MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,"unique key ",currentTime,currentDate,"URL for File","online"))
-
-        recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+        MessagesList.add(MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,messageID,currentTime,currentDate,"URL for File","online"))
 
 
-        ChatAdapter(MessagesList).notifyDataSetChanged()
 
     }
 }

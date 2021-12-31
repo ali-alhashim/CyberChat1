@@ -1,54 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-     android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:maxWidth="250dp"
         android:layout_height="wrap_content"
-        android:id="@+id/rvLayout"
-        tools:ignore="UselessParent">
+        android:layout_marginStart="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_message_green"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@id/messengerImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="This is a message" />
+
+    <TextView
+        android:id="@+id/messengerTextViewNameAndNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        app:layout_constraintStart_toStartOf="@id/messageTextView"
+        app:layout_constraintTop_toBottomOf="@id/messageTextView"
+        tools:text="Name Mobile Number" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/messengerImageView"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_baseline_person_add_alt_1_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/messageTextView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/receiverMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-
-            android:background="@drawable/receiver_message_layout"
-            android:elevation="2dp"
-            android:padding="5dp"
-            android:text="@string/receiver_message_here"
-            android:textColor="@color/black"
-            tools:ignore="RelativeOverlap" />
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/senderMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/sender_message_layout"
-            android:elevation="2dp"
-            android:padding="5dp"
-            android:text="@string/sender_message_here"
-            android:textColor="@color/black"
-            tools:ignore="RelativeOverlap" />
-
-
-
-
-    </RelativeLayout>
-</LinearLayout>
