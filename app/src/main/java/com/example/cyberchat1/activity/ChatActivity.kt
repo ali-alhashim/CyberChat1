@@ -66,14 +66,15 @@ class ChatActivity : AppCompatActivity() {
         {
             //set contact name and phone number for top bar
             contactNameChat.text = extras.getString("ContactName")
-            contactPhoneChat.text =extras.getString("PhoneNumber")
+            contactPhoneChat.text =extras.getString("PhoneNumber")?.replace("\\s".toRegex(),"")
 
 
         }
         //--
 
-
+        Log.d(TAG,"you called retrieve Message")
         retrieveMessage()
+
 
         // send button action ----
         sendMessageButton.setOnClickListener{
@@ -150,7 +151,7 @@ class ChatActivity : AppCompatActivity() {
                    Log.d(TAG,"the new Message saved in firebase with ID ${snapshot.key.toString()}")
 
 
-                   if( (snapshot.child("from").value.toString() == MainActivity.CurrentPhoneNumber && snapshot.child("to").value.toString() ==contactPhoneChat.text.toString()) || (snapshot.child("to").value.toString() == MainActivity.CurrentPhoneNumber && snapshot.child("from").value.toString() == contactPhoneChat.text.toString()))
+                   if( (snapshot.child("from").value.toString().replace("\\s".toRegex(),"") == MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),"") && snapshot.child("to").value.toString().replace("\\s".toRegex(),"") ==contactPhoneChat.text.toString().replace("\\s".toRegex(),"")) || (snapshot.child("to").value.toString().replace("\\s".toRegex(),"") == MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),"") && snapshot.child("from").value.toString().replace("\\s".toRegex(),"") == contactPhoneChat.text.toString().replace("\\s".toRegex(),"")))
                    {
                        // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
                        Log.d(TAG,"there is a Message found below")
@@ -169,18 +170,20 @@ class ChatActivity : AppCompatActivity() {
 
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
+                   Log.d(TAG,"function on child changed called ")
+
                }
 
                override fun onChildRemoved(snapshot: DataSnapshot) {
-                   TODO("Not yet implemented")
+                   Log.d(TAG,"function on child removed called ")
                }
 
                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                   TODO("Not yet implemented")
+                   Log.d(TAG,"function on child moved called ")
                }
 
                override fun onCancelled(error: DatabaseError) {
-                   TODO("Not yet implemented")
+                   Log.d(TAG,"function on child cancelled called ")
                }
            }
        )
