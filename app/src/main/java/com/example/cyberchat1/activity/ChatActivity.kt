@@ -72,6 +72,10 @@ class ChatActivity : AppCompatActivity() {
             Log.d("TAG","you click on send button with message ${textMessage.text} ")
             // call function for send message
             sendMessage()
+
+            retrieveMessage()
+
+
         }
         // --
     }
@@ -98,11 +102,12 @@ class ChatActivity : AppCompatActivity() {
 
 
         // send to firebase++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("message").setValue(textMessage.text.toString())
-        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("date").setValue(currentDate)
-        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("time").setValue(currentTime)
-        db.getReference("messages").child(messageSender+"TO"+messageReceiver).child(messageID).child("status").setValue("sent")
+        db.getReference("messages").child(messageID).child("from").setValue(messageSender)
+        db.getReference("messages").child(messageID).child("to").setValue(messageReceiver)
+        db.getReference("messages").child(messageID).child("message").setValue(textMessage.text.toString())
+        db.getReference("messages").child(messageID).child("date").setValue(currentDate)
+        db.getReference("messages").child(messageID).child("time").setValue(currentTime)
+        db.getReference("messages").child(messageID).child("status").setValue("sent")
 
         Log.d(TAG,"you push to firebase new message with ID ${messageID}")
         // end end to firebase+++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -129,5 +134,40 @@ class ChatActivity : AppCompatActivity() {
         /*
         * Retrieve Messages from massages where sub child ("from") == Current phone Number and ("to") == selected phone number
         *  */
+
+       db.reference.child("messages").addChildEventListener(
+           object: ChildEventListener{
+               override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                   Log.d(TAG,"the new Message saved in firebase with ID ${snapshot.key.toString()}")
+
+
+                   if( (snapshot.child(snapshot.key.toString()).child("from").value == MainActivity.CurrentPhoneNumber && snapshot.child(snapshot.key.toString()).child("to").value ==contactPhoneChat.text.toString()) || (snapshot.child(snapshot.key.toString()).child("to").value == MainActivity.CurrentPhoneNumber && snapshot.child(snapshot.key.toString()).child("from").value == contactPhoneChat.text.toString()))
+                   {
+                       // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
+
+                       Log.d(TAG,snapshot.toString())
+
+                   }
+               }
+
+               override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                   TODO("Not yet implemented")
+               }
+
+               override fun onChildRemoved(snapshot: DataSnapshot) {
+                   TODO("Not yet implemented")
+               }
+
+               override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                   TODO("Not yet implemented")
+               }
+
+               override fun onCancelled(error: DatabaseError) {
+                   TODO("Not yet implemented")
+               }
+           }
+       )
+
+
     }
 }

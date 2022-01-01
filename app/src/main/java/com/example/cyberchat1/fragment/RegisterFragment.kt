@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import com.example.cyberchat1.MyDataClasses.Users
 import com.example.cyberchat1.activity.MainActivity
 import com.example.cyberchat1.R
 import com.google.android.gms.common.api.ApiException
@@ -20,6 +21,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hbb20.CountryCodePicker
 
@@ -254,8 +256,15 @@ class RegisterFragment : Fragment() {
 
 
                     Log.d(TAG,"you saved your Mobile number and user UID in CyberChatSharedPreferences with $MOBILNUMBER and user UID : $userID")
+                    //-------------------------------------------
+                    //save the new user in firebase at users
+                    val newUser = Users(userID!!,MOBILNUMBER!!,"","")
+                    // Real Time Database
+                    val database = Firebase.database
 
-
+                    database.getReference("users").child(userID)
+                        .setValue(newUser)
+                    //--------------------------------------------------
                     val user = task.result?.user
                     //go to chat list
                     MainActivity.navController.navigate(R.id.action_registerFragment_to_MainFragment)
