@@ -57,6 +57,8 @@ class ChatActivity : AppCompatActivity() {
         // assign to chatAdapter
         recyclerViewMessages.adapter = ChatAdapter(MessagesList)
 
+
+
         // Initialize Realtime Database
         db = Firebase.database
 
@@ -146,6 +148,7 @@ class ChatActivity : AppCompatActivity() {
 
        db.reference.child("messages").addChildEventListener(
            object: ChildEventListener{
+               @SuppressLint("NotifyDataSetChanged")
                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
 
                    Log.d(TAG,"the new Message saved in firebase with ID ${snapshot.key.toString()}")

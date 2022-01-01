@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+import com.example.cyberchat1.activity.MainActivity
 import com.example.cyberchat1.model.MessagesModel
 
 // class name       parameter list type          inherit RecyclerAdapter
@@ -38,6 +39,15 @@ class ChatAdapter(val messages:List<MessagesModel>) : RecyclerView.Adapter<ChatA
 
         holder.messageTextView.text = messages[position].message
         holder.messengerTextViewNameAndNumber.text = messages[position].from + " " + messages[position].date + " " + messages[position].time
+
+        if(messages[position].from == MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),""))
+        {
+            holder.messageTextView.setBackgroundResource(R.drawable.rounded_message_green)
+        }
+        else
+        {
+           holder.messageTextView.setBackgroundResource(R.drawable.rounded_message_bule)
+        }
 
 
     }
