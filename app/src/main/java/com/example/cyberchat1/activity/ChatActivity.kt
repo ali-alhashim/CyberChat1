@@ -54,6 +54,9 @@ class ChatActivity : AppCompatActivity() {
 
         textMessage = findViewById(R.id.textMessage)
 
+        // assign to chatAdapter
+        recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+
         // Initialize Realtime Database
         db = Firebase.database
 
@@ -64,8 +67,13 @@ class ChatActivity : AppCompatActivity() {
             //set contact name and phone number for top bar
             contactNameChat.text = extras.getString("ContactName")
             contactPhoneChat.text =extras.getString("PhoneNumber")
+
+
         }
         //--
+
+
+        retrieveMessage()
 
         // send button action ----
         sendMessageButton.setOnClickListener{
@@ -73,7 +81,7 @@ class ChatActivity : AppCompatActivity() {
             // call function for send message
             sendMessage()
 
-            retrieveMessage()
+
 
 
         }
@@ -120,8 +128,7 @@ class ChatActivity : AppCompatActivity() {
         // messages count
         val messagesCount = ChatAdapter(MessagesList).itemCount
 
-        // assign to chatAdapter
-        recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+
         // update recycler view with the new items
         ChatAdapter(MessagesList).notifyDataSetChanged()
 
@@ -131,6 +138,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun retrieveMessage()
     {
+        //MessagesList.clear()
         /*
         * Retrieve Messages from massages where sub child ("from") == Current phone Number and ("to") == selected phone number
         *  */
@@ -138,20 +146,29 @@ class ChatActivity : AppCompatActivity() {
        db.reference.child("messages").addChildEventListener(
            object: ChildEventListener{
                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+
                    Log.d(TAG,"the new Message saved in firebase with ID ${snapshot.key.toString()}")
 
 
-                   if( (snapshot.child(snapshot.key.toString()).child("from").value == MainActivity.CurrentPhoneNumber && snapshot.child(snapshot.key.toString()).child("to").value ==contactPhoneChat.text.toString()) || (snapshot.child(snapshot.key.toString()).child("to").value == MainActivity.CurrentPhoneNumber && snapshot.child(snapshot.key.toString()).child("from").value == contactPhoneChat.text.toString()))
+                   if( (snapshot.child("from").value.toString() == MainActivity.CurrentPhoneNumber && snapshot.child("to").value.toString() ==contactPhoneChat.text.toString()) || (snapshot.child("to").value.toString() == MainActivity.CurrentPhoneNumber && snapshot.child("from").value.toString() == contactPhoneChat.text.toString()))
                    {
                        // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
-
+                       Log.d(TAG,"there is a Message found below")
                        Log.d(TAG,snapshot.toString())
 
+                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"URL for File","online"))
+
+                       ChatAdapter(MessagesList).notifyDataSetChanged()
+                       recyclerViewMessages.smoothScrollToPosition(ChatAdapter(MessagesList).itemCount)
+                   }
+                   else
+                   {
+                       Log.d(TAG,"There is no messages between you and your selected contact")
                    }
                }
 
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                   TODO("Not yet implemented")
+
                }
 
                override fun onChildRemoved(snapshot: DataSnapshot) {
