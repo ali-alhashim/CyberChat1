@@ -28,9 +28,7 @@ import com.hbb20.CountryCodePicker
 
 class RegisterFragment : Fragment() {
 
-    // [START declare_auth]
-   // private lateinit var auth: FirebaseAuth
-    // [END declare_auth]
+
     private var SMSCODE :String=""
     private var MOBILNUMBER : String = ""
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks

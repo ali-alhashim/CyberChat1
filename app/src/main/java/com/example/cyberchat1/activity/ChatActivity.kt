@@ -32,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var   recyclerViewMessages : RecyclerView
     lateinit var db: FirebaseDatabase
     private lateinit var    contactPhoneChat :TextView
+    private lateinit var chatAdapter : ChatAdapter
 
     private val MessagesList = mutableListOf<MessagesModel>()
 
@@ -54,8 +55,10 @@ class ChatActivity : AppCompatActivity() {
 
         textMessage = findViewById(R.id.textMessage)
 
+        chatAdapter = ChatAdapter(MessagesList)
+
         // assign to chatAdapter
-        recyclerViewMessages.adapter = ChatAdapter(MessagesList)
+        recyclerViewMessages.adapter = chatAdapter
 
 
 
@@ -129,13 +132,10 @@ class ChatActivity : AppCompatActivity() {
         // scroll To Position for  recyclerViewMessages
 
         // messages count
-        val messagesCount = ChatAdapter(MessagesList).itemCount
+        val messagesCount = chatAdapter.itemCount
 
 
-        // update recycler view with the new items
-        ChatAdapter(MessagesList).notifyDataSetChanged()
-
-        recyclerViewMessages.smoothScrollToPosition(messagesCount)
+        retrieveMessage()
 
     }
 
@@ -162,8 +162,8 @@ class ChatActivity : AppCompatActivity() {
 
                        MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"URL for File","online"))
 
-                       ChatAdapter(MessagesList).notifyDataSetChanged()
-                       recyclerViewMessages.smoothScrollToPosition(ChatAdapter(MessagesList).itemCount)
+                       chatAdapter.notifyDataSetChanged()
+                       recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
                    }
                    else
                    {
@@ -190,6 +190,7 @@ class ChatActivity : AppCompatActivity() {
                }
            }
        )
+
 
 
     }
