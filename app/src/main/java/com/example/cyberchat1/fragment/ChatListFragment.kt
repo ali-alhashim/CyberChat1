@@ -10,13 +10,19 @@ import android.view.ViewGroup
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.R
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.activity.MainActivity
+import com.example.cyberchat1.adapters.ChatListAdapter
+import com.example.cyberchat1.model.ContactsModel
+import com.google.firebase.database.FirebaseDatabase
 
 
 class ChatListFragment : Fragment()
 {
-
-
+    private lateinit var chatListRecyclerView : RecyclerView
+    private lateinit var chatListAdapter : ChatListAdapter
+    private val chatList = mutableListOf<ContactsModel>()
+    lateinit var db: FirebaseDatabase
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,18 @@ class ChatListFragment : Fragment()
 
         val selectContactNewChatBtn : FloatingActionButton = view.findViewById(com.example.cyberchat1.R.id.selectContactNewChatBtn)
 
+        chatListRecyclerView = view.findViewById(com.example.cyberchat1.R.id.chatListRecyclerView)
+
+        chatListAdapter = ChatListAdapter(chatList,this)
+
+        chatListRecyclerView.adapter = chatListAdapter
+
+
+        chatList.add(ContactsModel("Ali alhashim","image Uri","055555","","online"))
+
+
+          chatListAdapter.notifyDataSetChanged()
+
 
         selectContactNewChatBtn.setOnClickListener()
         {
@@ -48,6 +66,9 @@ class ChatListFragment : Fragment()
 
 
         }
+
+
+
 
     }
 

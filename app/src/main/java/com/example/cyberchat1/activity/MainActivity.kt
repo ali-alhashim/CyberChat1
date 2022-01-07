@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
-                //.setLogo(R.drawable.my_great_logo) // Set logo drawable
+                .setLogo(R.drawable.cyberchat1logo) // Set logo drawable
                 // .setTheme(R.style.MySuperAppTheme) // Set theme
                 .build()
             signInLauncher.launch(signInIntent)

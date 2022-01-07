@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toFile
+import com.bumptech.glide.Glide
 import com.example.cyberchat1.R
 import com.example.cyberchat1.activity.MainActivity
 import com.google.android.gms.tasks.OnFailureListener
@@ -61,8 +62,11 @@ class ProfileFragment : Fragment() {
         refStorage.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
 
 
-            val photo: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it);
-            user_profile_image.setImageBitmap(photo)
+            Glide.with(this).load(it).into(user_profile_image)
+
+
+
+
         })
 
 
