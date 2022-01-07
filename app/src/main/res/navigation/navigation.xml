@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_MainFragment_to_selectContactToStartChat"
             app:destination="@id/selectContactToStartChat" />
+        <action
+            android:id="@+id/action_MainFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatListFragment"
@@ -62,6 +65,15 @@
         tools:layout="@layout/fragment_select_contact_to_start_chat" >
         <action
             android:id="@+id/action_selectContactToStartChat_to_MainFragment2"
+            app:destination="@id/MainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cyberchat1.fragment.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_MainFragment"
             app:destination="@id/MainFragment" />
     </fragment>
 </navigation>

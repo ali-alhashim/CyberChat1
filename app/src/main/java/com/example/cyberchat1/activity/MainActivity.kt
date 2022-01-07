@@ -229,7 +229,9 @@ class MainActivity : AppCompatActivity() {
         else if(item.itemId == R.id.menu_profile)
         {
             //go to profile fragment
-            Toast.makeText(this@MainActivity,"open profile", Toast.LENGTH_LONG  ).show()
+
+
+            navController.navigate(R.id.action_MainFragment_to_profileFragment)
         }
         return true
     }
