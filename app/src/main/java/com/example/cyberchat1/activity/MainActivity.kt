@@ -4,21 +4,20 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cyberchat1.R
-import com.google.firebase.auth.AuthCredential
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         {
             Log.d(TAG,"open fragment register")
 
-            navController.navigate(R.id.action_splashFragment_to_registerFragment)
+            navController.navigate(R.id.action_MainFragment_to_registerFragment)
 
 
 
@@ -182,7 +181,9 @@ class MainActivity : AppCompatActivity() {
             CurrentPhoneNumber = mobileNumber_preferences
 
             //go to chat list
-            navController.navigate(R.id.action_splashFragment_to_chatListFragment)
+
+            //show chat list from firebase
+
         }
 
 
@@ -203,6 +204,34 @@ class MainActivity : AppCompatActivity() {
     // function to enable user go back
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+
+    // to add Main Menu to this Activity
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+
+    // function to handle selected item from menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_sign_out)
+        {
+            AuthUI.getInstance().signOut(this)
+                .addOnCompleteListener {
+                    Toast.makeText(this@MainActivity,"You have been signed out.", Toast.LENGTH_LONG  ).show()
+
+                    // Close activity
+                    finish()
+                }
+        }
+        else if(item.itemId == R.id.menu_profile)
+        {
+            //go to profile fragment
+            Toast.makeText(this@MainActivity,"open profile", Toast.LENGTH_LONG  ).show()
+        }
+        return true
     }
 
 

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="profile" app:showAsAction="never"
+        android:id="@+id/menu_profile"/>
+
+    <item android:title="sign out" app:showAsAction="never"
+        android:id="@+id/menu_sign_out"/>
+
+</menu>
