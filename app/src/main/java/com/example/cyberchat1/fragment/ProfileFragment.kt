@@ -1,8 +1,10 @@
 package com.example.cyberchat1.fragment
 
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -12,12 +14,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.example.cyberchat1.R
-
+import com.example.cyberchat1.activity.MainActivity
 
 
 class ProfileFragment : Fragment() {
 
-    lateinit var user_profile_image : ImageView
+    private lateinit var user_profile_image : ImageView
+
+    private lateinit var imageUri: Uri
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,22 +42,45 @@ class ProfileFragment : Fragment() {
 
          user_profile_image  = view.findViewById(R.id.user_profile_image)
 
+
+
+
         user_profile_image.setOnClickListener{
+
             Log.d(TAG,"open Camera")
 
-            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            requireActivity().startActivityForResult(cameraIntent, 1888)
 
+            takePicture()
         }
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        Log.d(TAG,"there is activity result from Profile Fragment")
+
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1888) {
-            val photo: Bitmap = data?.extras?.get("data") as Bitmap
+
+            Log.d(TAG,"there is activity result with Request Code 1888")
+
+            val photo: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+
             user_profile_image.setImageBitmap(photo)
         }
+    }
+
+    private fun takePicture() {
+
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Profile Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Cyber Chat profile photo")
+
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        imageUri = requireActivity().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)!!
+
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(cameraIntent, 1888)
     }
 
 
