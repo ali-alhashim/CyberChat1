@@ -99,8 +99,8 @@ class ChatActivity : AppCompatActivity() {
     {
 
 
-        val messageSender : String  = MainActivity.CurrentPhoneNumber
-        val messageReceiver : String =  contactPhoneChat.text.toString()
+        val messageSender : String  = MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),"")
+        val messageReceiver : String =  contactPhoneChat.text.replace("\\s".toRegex(),"")
         // format for time and date
         val simpleTimeFormat = SimpleDateFormat("HH:mm:ss")
         val simpleDateFormat = SimpleDateFormat("MM-dd-yyyy")
