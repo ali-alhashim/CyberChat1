@@ -40,8 +40,11 @@
                 android:layout_height="wrap_content"
                 android:hint="Name" />
             <EditText
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:background="@drawable/edit_text_shadow"
+                android:textColor="@color/black"
+                android:layout_height="36dp">
 
             </EditText>
         </LinearLayout>
@@ -57,8 +60,11 @@
                 android:layout_height="wrap_content"
                 android:hint="Email" />
             <EditText
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:background="@drawable/edit_text_shadow"
+                android:textColor="@color/black"
+                android:layout_height="36dp">
 
             </EditText>
         </LinearLayout>
@@ -73,11 +79,22 @@
                 android:layout_height="wrap_content"
                 android:hint="Phone Number" />
             <EditText
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:textColor="@color/black"
+                android:background="@drawable/edit_text_shadow"
+                android:layout_height="36dp">
 
             </EditText>
         </LinearLayout>
+<Button
+    android:layout_margin="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/updateProfileButton"
+    android:text="update"
+    />
+
 
     </LinearLayout>
 
