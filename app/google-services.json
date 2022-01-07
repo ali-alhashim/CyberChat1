@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "540349469655",
+    "firebase_url": "https://nchat-f013f-default-rtdb.firebaseio.com",
     "project_id": "nchat-f013f",
     "storage_bucket": "nchat-f013f.appspot.com"
   },
@@ -13,6 +14,59 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "540349469655-5d2a8qou6lrlfdtekcbfmccljeq50kcu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cyberchat1",
+            "certificate_hash": "b3a997f11d381d1657d415943b92d50bf0bf73db"
+          }
+        },
+        {
+          "client_id": "540349469655-nli9el9m2714phadeu9o1ru8krgcp713.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cyberchat1",
+            "certificate_hash": "9ca9cc6311240b7a30cc309a0cb075b7213235b9"
+          }
+        },
+        {
+          "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0XQwhK9mOGwGlp97-84kf0rxmGA0QFb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540349469655:android:d006dd74f5de4a207a3192",
+        "android_client_info": {
+          "package_name": "com.example.firebasecurdtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540349469655-ft3ougfff7j2lodovllcc0c39bl3bpbk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebasecurdtest",
+            "certificate_hash": "b3a997f11d381d1657d415943b92d50bf0bf73db"
+          }
+        },
         {
           "client_id": "540349469655-5ms0kkrhoehogpkk55239c1koomd64vl.apps.googleusercontent.com",
           "client_type": 3

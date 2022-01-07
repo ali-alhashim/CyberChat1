@@ -9,17 +9,20 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_profile_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_margin="10dp"
         android:layout_marginTop="393dp"
-        android:background="@drawable/rounded_profile_image"
-        android:scaleType="fitXY"
+        android:src="#B3EDF4"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
