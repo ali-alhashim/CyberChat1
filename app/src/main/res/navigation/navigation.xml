@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_selectContactToStartChat_to_MainFragment2"
             app:destination="@id/MainFragment" />
+        <action
+            android:id="@+id/action_selectContactToStartChat_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
