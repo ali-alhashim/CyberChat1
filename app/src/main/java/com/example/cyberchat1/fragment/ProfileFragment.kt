@@ -1,9 +1,11 @@
 package com.example.cyberchat1.fragment
 
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,9 +14,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.net.toFile
 import com.example.cyberchat1.R
 import com.example.cyberchat1.activity.MainActivity
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
+import java.io.File
 
 
 class ProfileFragment : Fragment() {
@@ -42,6 +52,34 @@ class ProfileFragment : Fragment() {
 
          user_profile_image  = view.findViewById(R.id.user_profile_image)
 
+
+        val fileName = MainActivity.auth.currentUser?.uid+".jpg"
+
+        val refStorage = FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
+
+
+        refStorage.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
+
+
+            val photo: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it);
+            user_profile_image.setImageBitmap(photo)
+        })
+
+
+
+
+
+        val updateProfileButton : Button = view.findViewById(R.id.updateProfileButton)
+
+
+
+
+
+
+        updateProfileButton.setOnClickListener{
+            Log.d(TAG, "update user profile")
+            updateProfile()
+        }
 
 
 
@@ -81,6 +119,29 @@ class ProfileFragment : Fragment() {
 
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(cameraIntent, 1888)
+    }
+
+    private fun updateProfile()
+    {
+        // upload profile photo to firebase
+        if(imageUri !=null)
+        {
+            val fileName = MainActivity.auth.currentUser?.uid+".jpg"
+
+            val refStorage = FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
+
+            refStorage.putFile(imageUri).addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> {
+                    taskSnapshot ->
+                taskSnapshot.storage.downloadUrl.addOnSuccessListener {
+                    val imageUrl = it.toString()
+                    Toast.makeText(requireContext(),"Your Profile updated Successfully",Toast.LENGTH_LONG).show()
+                }
+            })
+                ?.addOnFailureListener(OnFailureListener { e ->
+                    Toast.makeText(requireContext(),e.message,Toast.LENGTH_LONG).show()
+                })
+
+        }
     }
 
 

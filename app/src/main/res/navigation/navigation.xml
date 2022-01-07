@@ -6,15 +6,6 @@
     app:startDestination="@id/MainFragment">
 
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.example.cyberchat1.fragment.RegisterFragment"
-        android:label="Register"
-        tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_registerFragment_to_MainFragment"
-            app:destination="@id/MainFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/MainFragment"
         android:name="com.example.cyberchat1.fragment.MainFragment"
         android:label="Main"
@@ -28,9 +19,6 @@
         <action
             android:id="@+id/action_MainFragment_to_callsFragment"
             app:destination="@id/callsFragment" />
-        <action
-            android:id="@+id/action_MainFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_MainFragment_to_selectContactToStartChat"
             app:destination="@id/selectContactToStartChat" />

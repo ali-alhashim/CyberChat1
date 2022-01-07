@@ -17,6 +17,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.cyberchat1.R
 import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -153,68 +155,41 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-        //-----------------------------------------------------------------------------------------
-        // first check if this device is already registered
-        // if the device is registered open chat list fragment
-        // else open register fragment
-        // connect to firebase lookup for saved UserUID with mobile number in Share preferences
-        //-----------------------------------------------------------------------------------------
-
-
-
-        val MySharedPreferences : SharedPreferences = this.getSharedPreferences("CyberChatSharedPreferences", 0)
-
-        val UserUID_preferences:String = MySharedPreferences.getString("UserUID","null").toString()
-        val mobileNumber_preferences:String = MySharedPreferences.getString("PhoneNumber","null").toString()
-
-        val User_Credential : String = MySharedPreferences.getString("User_Credential", "null").toString()
-
-
-        Log.d(TAG,"this first check before if condition for UserUID : $UserUID_preferences")
-
-        Log.d(TAG,"this first check before if condition for Mobile Number : $mobileNumber_preferences" )
-
-        // check if null go to register fragment
-
-        if(UserUID_preferences =="null")
-        {
-            Log.d(TAG,"open fragment register")
-
-            navController.navigate(R.id.action_MainFragment_to_registerFragment)
-
-
-
-
-
-
+        // run Sign in Launcher
+        val signInLauncher = registerForActivityResult(
+            FirebaseAuthUIActivityResultContract()
+        ) { res ->
+            this.onSignInResult(res)
         }
-        else
+        if(auth.currentUser == null) {
+            // Start sign in/sign up activity
+
+            // Choose authentication providers
+            val providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.PhoneBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build(),
+                // AuthUI.IdpConfig.FacebookBuilder().build(),
+                AuthUI.IdpConfig.TwitterBuilder().build())
+
+            val signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                //.setLogo(R.drawable.my_great_logo) // Set logo drawable
+                // .setTheme(R.style.MySuperAppTheme) // Set theme
+                .build()
+            signInLauncher.launch(signInIntent)
+
+
+        } else
         {
-            Log.d(TAG,"Already  register check if correct open chat list if not login again")
+            // User is already signed in. Therefore, open chat Main Fragment
 
-
-            // check if the credential is correct
-
-
-
-
-            Log.d(TAG,"you saved Mobile Number is : $mobileNumber_preferences")
-            Log.d(TAG,"you saved User UID is : $UserUID_preferences")
-            Log.d(TAG, "Your Credential is : $User_Credential")
-
-            //val myCredential:AuthCredential =  User_Credential as AuthCredential
-
-           // auth.signInWithCredential(myCredential)
-
-            // set after you check he is really the owner of this mobile number
-            CurrentPhoneNumber = mobileNumber_preferences
-
-            //go to chat list
-
-            //show chat list from firebase
-
+            CurrentPhoneNumber = auth.currentUser!!.phoneNumber.toString()
         }
+
+
+
 
 
 
@@ -268,6 +243,24 @@ class MainActivity : AppCompatActivity() {
 
         }
         return true
+    }
+
+
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            val user = FirebaseAuth.getInstance().currentUser
+            Toast.makeText(this,   "Welcome you Successfully signed in" + (FirebaseAuth.getInstance().getCurrentUser()?.getDisplayName()),Toast.LENGTH_LONG).show();
+
+
+            // ...
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+        }
     }
 
 
