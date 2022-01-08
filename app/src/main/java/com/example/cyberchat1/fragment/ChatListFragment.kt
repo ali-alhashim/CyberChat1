@@ -10,11 +10,13 @@ import android.view.ViewGroup
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.R
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.activity.MainActivity
 import com.example.cyberchat1.adapters.ChatListAdapter
 import com.example.cyberchat1.model.ContactsModel
-import com.google.firebase.database.FirebaseDatabase
+import com.example.cyberchat1.model.MessagesModel
+import com.google.firebase.database.*
 
 
 class ChatListFragment : Fragment()
@@ -43,6 +45,18 @@ class ChatListFragment : Fragment()
 
         val selectContactNewChatBtn : FloatingActionButton = view.findViewById(com.example.cyberchat1.R.id.selectContactNewChatBtn)
 
+        selectContactNewChatBtn.setOnClickListener()
+        {
+            Log.d(TAG,"you clicked on start new chat")
+            // go to selectContactNewChatFragment to start new chat
+
+            MainActivity.navController.navigate(com.example.cyberchat1.R.id.action_MainFragment_to_selectContactToStartChat)
+
+
+
+        }
+
+
         chatListRecyclerView = view.findViewById(com.example.cyberchat1.R.id.chatListRecyclerView)
 
         chatListAdapter = ChatListAdapter(chatList,this)
@@ -50,27 +64,21 @@ class ChatListFragment : Fragment()
         chatListRecyclerView.adapter = chatListAdapter
 
 
-        chatList.add(ContactsModel("Ali alhashim","image Uri","055555","","online"))
-
-
-          chatListAdapter.notifyDataSetChanged()
-
-
-        selectContactNewChatBtn.setOnClickListener()
-        {
-            Log.d(TAG,"you clicked on start new chat")
-            // go to selectContactNewChatFragment to start new chat
-
-           MainActivity.navController.navigate(com.example.cyberchat1.R.id.action_MainFragment_to_selectContactToStartChat)
+       // val query: Query = FirebaseDatabase.getInstance().reference.child("messages")
 
 
 
-        }
+
+        chatList.add(ContactsModel("0000","","","",""))
+
+        chatListAdapter.notifyDataSetChanged()
+
 
 
 
 
     }
+
 
 
 

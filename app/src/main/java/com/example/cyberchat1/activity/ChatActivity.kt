@@ -8,6 +8,7 @@ import android.util.Log
 
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
@@ -81,6 +82,10 @@ class ChatActivity : AppCompatActivity() {
         retrieveMessage()
 
 
+
+
+
+
         // send button action ----
         sendMessageButton.setOnClickListener{
             Log.d("TAG","you click on send button with message ${textMessage.text} ")
@@ -131,13 +136,10 @@ class ChatActivity : AppCompatActivity() {
         // clear the message text box
         textMessage.setText("")
 
-        // scroll To Position for  recyclerViewMessages
-
-        // messages count
-        val messagesCount = chatAdapter.itemCount
 
 
-        retrieveMessage()
+
+       retrieveMessage()
 
     }
 
@@ -196,4 +198,7 @@ class ChatActivity : AppCompatActivity() {
 
 
     }
+
+
+
 }
