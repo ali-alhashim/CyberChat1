@@ -25,6 +25,7 @@ class ChatListFragment : Fragment()
     private lateinit var chatListAdapter : ChatListAdapter
     private val chatList = mutableListOf<ContactsModel>()
     lateinit var db: FirebaseDatabase
+    lateinit var snapshotObj: DataSnapshot
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -59,22 +60,47 @@ class ChatListFragment : Fragment()
 
         chatListRecyclerView = view.findViewById(com.example.cyberchat1.R.id.chatListRecyclerView)
 
-        chatListAdapter = ChatListAdapter(chatList,this)
 
+        chatListAdapter = ChatListAdapter(chatList,this)
         chatListRecyclerView.adapter = chatListAdapter
 
 
-       // val query: Query = FirebaseDatabase.getInstance().reference.child("messages")
+
+        FirebaseDatabase.getInstance().reference.child("messages").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                snapshotObj = snapshot
+
+                for(chat in snapshotObj.children)
+                {
 
 
 
 
-        chatList.add(ContactsModel("0000","","","",""))
+                    chatList.add(ContactsModel(chat.child("to").value.toString(),"uidImage","","uid","online"))
+                    chatListAdapter.notifyDataSetChanged()
+                }
+            }
 
-        chatListAdapter.notifyDataSetChanged()
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
 
 
+
+
+
+
+
+
+
+
+
+        // clear list
+        chatList.clear()
 
 
     }
