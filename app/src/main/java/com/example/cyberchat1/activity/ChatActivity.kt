@@ -119,6 +119,7 @@ class ChatActivity : AppCompatActivity() {
         db.getReference("messages").child(messageID).child("from").setValue(messageSender)
         db.getReference("messages").child(messageID).child("fromUID").setValue(MainActivity.auth.currentUser?.uid.toString())
         db.getReference("messages").child(messageID).child("to").setValue(messageReceiver)
+       // db.getReference("messages").child(messageID).child("toUID").setValue(MainActivity.auth.getUserByPhoneNumber(messageReceiver))
         db.getReference("messages").child(messageID).child("message").setValue(textMessage.text.toString())
         db.getReference("messages").child(messageID).child("date").setValue(currentDate)
         db.getReference("messages").child(messageID).child("time").setValue(currentTime)
