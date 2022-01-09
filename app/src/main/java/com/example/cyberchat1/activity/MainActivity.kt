@@ -20,6 +20,10 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
@@ -190,9 +194,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
+       // print all users in firebase
 
-
-
+         //Log.d(TAG, )
 
 
     }//end onCreate fun

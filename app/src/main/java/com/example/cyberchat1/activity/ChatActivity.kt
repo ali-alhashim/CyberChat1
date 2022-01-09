@@ -139,7 +139,9 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-       retrieveMessage()
+      // retrieveMessage()
+        chatAdapter.notifyDataSetChanged()
+        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
 
     }
 
