@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toFile
@@ -23,6 +24,7 @@ import com.example.cyberchat1.R
 import com.example.cyberchat1.activity.MainActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import java.io.File
@@ -52,6 +54,12 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
          user_profile_image  = view.findViewById(R.id.user_profile_image)
+        val updateProfileButton : Button = view.findViewById(R.id.updateProfileButton)
+
+
+        val profileUserName : EditText = view.findViewById(R.id.profileUserName)
+        val profileUserEmail : EditText = view.findViewById(R.id.profileUserEmail)
+        val profilePhoneNumber : EditText = view.findViewById(R.id.profilePhoneNumber)
 
 
         val fileName = MainActivity.auth.currentUser?.uid+".jpg"
@@ -70,19 +78,59 @@ class ProfileFragment : Fragment() {
         })
 
 
+        // get user profile
+        val user = MainActivity.auth.currentUser
+        user?.let {
+            // Name, email address, and profile photo Url
+            profileUserName.setText(it.displayName)
+            profileUserEmail.setText(it.email)
+            profilePhoneNumber.setText(it.phoneNumber)
+            val photoUrl = it.photoUrl
+
+
+        }
 
 
 
-        val updateProfileButton : Button = view.findViewById(R.id.updateProfileButton)
 
 
 
 
 
-
+         //update user profile
         updateProfileButton.setOnClickListener{
+
+
+
+            //-----------
+
+            val profileUpdates = userProfileChangeRequest {
+                displayName = profileUserName.text.toString()
+
+                //photoUri = Uri.parse(imageUri.toString())
+            }
+
+            MainActivity.auth.currentUser!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User profile updated.")
+                    }
+                }
+
+
+            MainActivity.auth.currentUser!!.updateEmail(profileUserEmail.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User email address updated.")
+                    }
+                }
+
+            //-----------
+
+
             Log.d(TAG, "update user profile")
-            updateProfile()
+           // updateProfile()
+
         }
 
 

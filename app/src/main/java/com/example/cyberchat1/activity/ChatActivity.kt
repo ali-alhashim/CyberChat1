@@ -8,18 +8,15 @@ import android.util.Log
 
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
+
 import com.example.cyberchat1.adapters.ChatAdapter
 
 import com.example.cyberchat1.model.MessagesModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -124,7 +121,7 @@ class ChatActivity : AppCompatActivity() {
         db.getReference("messages").child(messageID).child("from").setValue(messageSender)
         db.getReference("messages").child(messageID).child("fromUID").setValue(MainActivity.auth.currentUser?.uid.toString())
         db.getReference("messages").child(messageID).child("to").setValue(messageReceiver)
-       // db.getReference("messages").child(messageID).child("toUID").setValue(MainActivity.auth.getUserByPhoneNumber(messageReceiver))
+        //db.getReference("messages").child(messageID).child("toUID").setValue(FirebaseAuth.getInstance().getUserByPhoneNumber(messageReceiver))
         db.getReference("messages").child(messageID).child("message").setValue(textMessage.text.toString())
         db.getReference("messages").child(messageID).child("date").setValue(currentDate)
         db.getReference("messages").child(messageID).child("time").setValue(currentTime)
@@ -135,7 +132,6 @@ class ChatActivity : AppCompatActivity() {
 
         // clear the message text box
         textMessage.setText("")
-
 
 
 
@@ -204,3 +200,6 @@ class ChatActivity : AppCompatActivity() {
 
 
 }
+
+
+
