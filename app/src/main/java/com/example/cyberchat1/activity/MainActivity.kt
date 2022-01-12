@@ -26,8 +26,12 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     companion object
     {
         lateinit var auth : FirebaseAuth
+        lateinit var db : FirebaseDatabase
         @SuppressLint("StaticFieldLeak")
         lateinit var navController: NavController
 
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
          Log.d(TAG,"MainActivity Start ----")
 
         // Initialize Firebase Auth
@@ -58,7 +64,8 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
 
-
+        // Initialize Realtime Database
+        db = Firebase.database
 
 
         //---navController
@@ -112,18 +119,21 @@ class MainActivity : AppCompatActivity() {
             signInLauncher.launch(signInIntent)
 
 
-        } else
+        }
+        else
         {
             // User is already signed in. Therefore, open chat Main Fragment
 
+
             CurrentPhoneNumber = auth.currentUser!!.phoneNumber.toString()
+
+            // change the user status from offline to online
+            db.getReference("users").child(auth.currentUser?.uid.toString()).child("status").setValue("online")
         }
 
 
 
-       // print all users in firebase
 
-         //Log.d(TAG, )
 
 
     }//end onCreate fun
@@ -184,6 +194,7 @@ class MainActivity : AppCompatActivity() {
             val user = FirebaseAuth.getInstance().currentUser
             Toast.makeText(this,   "Welcome you Successfully signed in" + (FirebaseAuth.getInstance().getCurrentUser()?.getDisplayName()),Toast.LENGTH_LONG).show();
 
+            RegisterNewUser(user?.uid.toString(),user?.phoneNumber.toString())
 
             // ...
         } else {
@@ -192,6 +203,20 @@ class MainActivity : AppCompatActivity() {
             // response.getError().getErrorCode() and handle the error.
             // ...
         }
+    }
+
+    fun RegisterNewUser(uid:String, phoneNumber:String)
+    {
+        val simpleDateFormat = SimpleDateFormat("MM-dd-yyyy")
+        val currentDate: String = simpleDateFormat.format((Date()))
+        db.getReference("users").child(uid).child("phoneNumber").setValue(phoneNumber)
+        db.getReference("users").child(uid).child("RegisteredDate").setValue(currentDate)
+        db.getReference("users").child(uid).child("status").setValue("online")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        db.getReference("users").child(auth.currentUser?.uid.toString()).child("status").setValue("offline")
     }
 
 
