@@ -215,8 +215,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         db.getReference("users").child(auth.currentUser?.uid.toString()).child("status").setValue("offline")
+        super.onDestroy()
+
     }
 
 
