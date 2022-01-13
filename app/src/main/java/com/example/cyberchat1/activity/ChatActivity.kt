@@ -30,6 +30,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var   recyclerViewMessages : RecyclerView
     lateinit var db: FirebaseDatabase
     private lateinit var    contactPhoneChat :TextView
+    private lateinit var contactUID : String
     private lateinit var chatAdapter : ChatAdapter
 
     private val MessagesList = mutableListOf<MessagesModel>()
@@ -70,7 +71,7 @@ class ChatActivity : AppCompatActivity() {
             //set contact name and phone number for top bar
             contactNameChat.text = extras.getString("ContactName")
             contactPhoneChat.text =extras.getString("PhoneNumber")?.replace("\\s".toRegex(),"")
-
+            contactUID = extras.getString("uid").toString()
 
         }
         //--
@@ -121,7 +122,7 @@ class ChatActivity : AppCompatActivity() {
         db.getReference("messages").child(messageID).child("from").setValue(messageSender)
         db.getReference("messages").child(messageID).child("fromUID").setValue(MainActivity.auth.currentUser?.uid.toString())
         db.getReference("messages").child(messageID).child("to").setValue(messageReceiver)
-        //db.getReference("messages").child(messageID).child("toUID").setValue(FirebaseAuth.getInstance().getUserByPhoneNumber(messageReceiver))
+        db.getReference("messages").child(messageID).child("toUID").setValue(contactUID)
         db.getReference("messages").child(messageID).child("message").setValue(textMessage.text.toString())
         db.getReference("messages").child(messageID).child("date").setValue(currentDate)
         db.getReference("messages").child(messageID).child("time").setValue(currentTime)
@@ -156,7 +157,7 @@ class ChatActivity : AppCompatActivity() {
                    Log.d(TAG,"the new Message saved in firebase with ID ${snapshot.key.toString()}")
 
 
-                   if( (snapshot.child("from").value.toString().replace("\\s".toRegex(),"") == MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),"") && snapshot.child("to").value.toString().replace("\\s".toRegex(),"") ==contactPhoneChat.text.toString().replace("\\s".toRegex(),"")) || (snapshot.child("to").value.toString().replace("\\s".toRegex(),"") == MainActivity.CurrentPhoneNumber.replace("\\s".toRegex(),"") && snapshot.child("from").value.toString().replace("\\s".toRegex(),"") == contactPhoneChat.text.toString().replace("\\s".toRegex(),"")))
+                   if( (snapshot.child("fromUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("toUID").value.toString() == contactUID ) || (snapshot.child("toUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("fromUID").value.toString() == contactUID))
                    {
                        // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
                        Log.d(TAG,"there is a Message found below")

@@ -13,18 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
 import com.example.cyberchat1.adapters.ContactListAdapter
 import com.example.cyberchat1.model.ContactsModel
-import android.content.ContentResolver
 import android.content.ContentValues.TAG
-import android.provider.UserDictionary
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.widget.EditText
-import android.widget.TextSwitcher
-import com.example.cyberchat1.activity.MainActivity
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -75,6 +68,7 @@ class SelectContactToStartChat : Fragment() {
 
                 // call get contact list with search
                 getContactList(searchContactEditText.text.toString())
+
             }
         })
         //--------------------------------------------------------------------------------------
@@ -135,19 +129,11 @@ class SelectContactToStartChat : Fragment() {
 
                     val contactPhoneNo = it.getString(phoneNoIndex)
 
-                    if (contactName != null)
+                    if (contactName != null && contactPhoneNo!=null)
                     {
 
-                        //before you add to list check if the phone no as register in firebase or not
-
-
-
-                        if(getUserUIDByPhoneNumber(contactPhoneNo) !=null)
-                        {
-                            contactList.add(ContactsModel( contactName, null,  contactPhoneNo,getUserUIDByPhoneNumber(contactPhoneNo), null))
-                        }
-
-
+                       Log.d(TAG,"we send $contactPhoneNo for $contactName")
+                       getUserUIDByPhoneNumber(contactPhoneNo,contactName)
 
                     }
 
@@ -165,10 +151,7 @@ class SelectContactToStartChat : Fragment() {
 
 
 
-        contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
 
-
-        ContactListAdapter(contactList,requireContext()).notifyDataSetChanged()
 
 
 
@@ -176,46 +159,53 @@ class SelectContactToStartChat : Fragment() {
     } // end get contact list function
 
 
-    fun getUserUIDByPhoneNumber(phoneNumber : String): String? {
+    private fun getUserUIDByPhoneNumber(phoneNumber : String, contactName:String) {
 
         //Log.d(TAG,"you called get user UID by phone Number")
 
 
-        innerScope@ while (true) { FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
-            ValueEventListener  {
-            override fun  onDataChange(snapshot: DataSnapshot) {
 
-                val snapshotObj = snapshot
+            FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
 
-                for(contact in snapshotObj.children)
-                {
-                    //Log.d(TAG,contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
-
-                    if(contact.child("phoneNumber").value.toString().replace("\\s".toRegex(),"") == phoneNumber.replace("\\s".toRegex(),"") || phoneNumber == contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
+                    for (contact in snapshot.children)
                     {
-                         uidResult = contact.key.toString()
-                        Log.d(TAG,"we found $phoneNumber uid = $uidResult")
-
-                       break@innerScope
 
 
+                        if (contact.child("phoneNumber").value.toString().replace("\\s".toRegex(), "" ) == phoneNumber.replace(  "\\s".toRegex(), ""   ) || phoneNumber == contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(), "0") )
+                        {
+
+
+                            uidResult = contact.key.toString()
+
+                            contactList.add(ContactsModel( contactName, uidResult,  phoneNumber,uidResult, contact.child("status").value.toString()))
+
+                            Log.d(TAG,"we add $contactName with $phoneNumber UID = $uidResult")
+
+                            contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
+
+
+                            ContactListAdapter(contactList,requireContext()).notifyDataSetChanged()
+
+                            break
+
+                        }
 
                     }
 
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })}
-
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
 
 
 
-        Log.d(TAG,"your return value is $uidResult")
+           Log.d(TAG,"end of fun getUserUIDByPhoneNumber")
 
-            return uidResult
+
 
 
     }
