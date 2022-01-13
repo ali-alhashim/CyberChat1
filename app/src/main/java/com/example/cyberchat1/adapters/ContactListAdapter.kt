@@ -43,6 +43,7 @@ class ContactListAdapter(private val contacts : List<ContactsModel>, val context
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("ContactName", holder.contactName.text.toString())
             intent.putExtra("PhoneNumber", holder.contactPhone.text .toString())
+            intent.putExtra("uid",contact.uid.toString())
             context.startActivity(intent)
         }
 

@@ -36,7 +36,7 @@ class SelectContactToStartChat : Fragment() {
     private val contactList = mutableListOf<ContactsModel>()
 
     private lateinit var  contactListRecyclerView :RecyclerView
-     var uidResult:String? =null
+     var uidResult:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -194,6 +194,7 @@ class SelectContactToStartChat : Fragment() {
                     if(contact.child("phoneNumber").value.toString().replace("\\s".toRegex(),"") == phoneNumber.replace("\\s".toRegex(),"") || phoneNumber == contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
                     {
                         uidResult = contact.key.toString()
+
                         Log.d(TAG,"we found $phoneNumber uid = $uidResult")
 
                         break
@@ -209,13 +210,15 @@ class SelectContactToStartChat : Fragment() {
         })
 
 
-        Log.d(TAG,"$phoneNumber UID = $uidResult" )
 
 
+        Log.d(TAG,"your return value is $uidResult")
             return uidResult
 
 
     }
+
+
 
 
 
