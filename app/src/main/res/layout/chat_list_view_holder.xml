@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="#CDF1F8"
-        android:id="@+id/llUser"
+        android:id="@+id/contactLayout"
         android:padding="5dp"
 
         android:orientation="horizontal">

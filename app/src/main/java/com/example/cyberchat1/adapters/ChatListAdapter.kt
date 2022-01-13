@@ -1,5 +1,6 @@
 package com.example.cyberchat1.adapters
 
+import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cyberchat1.R
+import com.example.cyberchat1.activity.ChatActivity
 import com.example.cyberchat1.activity.MainActivity
 import com.example.cyberchat1.model.ContactsModel
 import com.example.cyberchat1.model.MessagesModel
@@ -24,6 +26,7 @@ class ChatListAdapter(val chats:List<ContactsModel>, val fragment: Fragment) : R
         val userStatusTxt: TextView = view.findViewById(R.id.userStatusTxt)
         val lastMessageTime : TextView = view.findViewById(R.id.lastMessageTime)
         val userProfilePhoto : ImageView = view.findViewById(R.id.userProfilePhoto)
+        val contactLayout : View = view.findViewById(R.id.contactLayout)
 
     }
 
@@ -55,6 +58,15 @@ class ChatListAdapter(val chats:List<ContactsModel>, val fragment: Fragment) : R
         imageUri.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
             Glide.with(fragment).load(it).into(holder.userProfilePhoto)
         })
+
+        holder.contactLayout.setOnClickListener{
+            //go to chat activity and send contact name and mobile
+            val intent = Intent(fragment.context, ChatActivity::class.java)
+            intent.putExtra("ContactName", chats[position].uname)
+            intent.putExtra("PhoneNumber",chats[position].phoneNumber)
+            intent.putExtra("uid", chats[position].uid)
+            fragment.context?.startActivity(intent)
+        }
 
 
 
