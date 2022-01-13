@@ -25,6 +25,10 @@ import android.widget.TextSwitcher
 import com.example.cyberchat1.activity.MainActivity
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class SelectContactToStartChat : Fragment() {
@@ -32,6 +36,7 @@ class SelectContactToStartChat : Fragment() {
     private val contactList = mutableListOf<ContactsModel>()
 
     private lateinit var  contactListRecyclerView :RecyclerView
+     var uidResult:String? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,9 +140,13 @@ class SelectContactToStartChat : Fragment() {
 
                         //before you add to list check if the phone no as register in firebase or not
 
-                        //if( PhoneAuthProvider.PHONE_SIGN_IN_METHOD)
 
-                        contactList.add(ContactsModel( contactName, null,  contactPhoneNo,null, null))
+
+                        if(getUserUIDByPhoneNumber(contactPhoneNo) !=null)
+                        {
+                            contactList.add(ContactsModel( contactName, null,  contactPhoneNo,getUserUIDByPhoneNumber(contactPhoneNo), null))
+                        }
+
 
 
                     }
@@ -165,6 +174,49 @@ class SelectContactToStartChat : Fragment() {
 
 
     } // end get contact list function
+
+
+    fun getUserUIDByPhoneNumber(phoneNumber : String): String? {
+
+        //Log.d(TAG,"you called get user UID by phone Number")
+
+
+        FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                val snapshotObj = snapshot
+
+                for(contact in snapshotObj.children)
+                {
+                    //Log.d(TAG,contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
+
+                    if(contact.child("phoneNumber").value.toString().replace("\\s".toRegex(),"") == phoneNumber.replace("\\s".toRegex(),"") || phoneNumber == contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
+                    {
+                        uidResult = contact.key.toString()
+                        Log.d(TAG,"we found $phoneNumber uid = $uidResult")
+
+                        break
+
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+        Log.d(TAG,"$phoneNumber UID = $uidResult" )
+
+
+            return uidResult
+
+
+    }
+
 
 
 
