@@ -187,11 +187,23 @@ class ChatActivity : AppCompatActivity() {
                    {
                        Log.d(TAG,"There is no messages between you and your selected contact")
                    }
+
+
                }
 
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
-                   Log.d(TAG,"function on child changed called ")
+                   if( (snapshot.child("fromUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("toUID").value.toString() == contactUID ) || (snapshot.child("toUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("fromUID").value.toString() == contactUID))
+                   {
+                       // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
+                       Log.d(TAG,"there is a Message found below")
+                       Log.d(TAG,snapshot.toString())
+
+                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"URL for File","online"))
+
+                       chatAdapter.notifyDataSetChanged()
+                       recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+                   }
 
                }
 
