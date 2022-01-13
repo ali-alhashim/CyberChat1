@@ -181,9 +181,9 @@ class SelectContactToStartChat : Fragment() {
         //Log.d(TAG,"you called get user UID by phone Number")
 
 
-        FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        innerScope@ while (true) { FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
+            ValueEventListener  {
+            override fun  onDataChange(snapshot: DataSnapshot) {
 
                 val snapshotObj = snapshot
 
@@ -193,11 +193,12 @@ class SelectContactToStartChat : Fragment() {
 
                     if(contact.child("phoneNumber").value.toString().replace("\\s".toRegex(),"") == phoneNumber.replace("\\s".toRegex(),"") || phoneNumber == contact.child("phoneNumber").value.toString().replace("^[\\s\\S]{0,4}".toRegex(),"0"))
                     {
-                        uidResult = contact.key.toString()
-
+                         uidResult = contact.key.toString()
                         Log.d(TAG,"we found $phoneNumber uid = $uidResult")
 
-                        break
+                       break@innerScope
+
+
 
                     }
 
@@ -207,12 +208,13 @@ class SelectContactToStartChat : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })
+        })}
 
 
 
 
         Log.d(TAG,"your return value is $uidResult")
+
             return uidResult
 
 
