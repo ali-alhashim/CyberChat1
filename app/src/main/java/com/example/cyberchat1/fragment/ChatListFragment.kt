@@ -77,7 +77,7 @@ class ChatListFragment : Fragment()
 
 
 
-                    chatList.add(ContactsModel(chat.child("to").value.toString(),"uidImage","","uid","online"))
+                    chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),"online"))
                     chatListAdapter.notifyDataSetChanged()
                 }
             }

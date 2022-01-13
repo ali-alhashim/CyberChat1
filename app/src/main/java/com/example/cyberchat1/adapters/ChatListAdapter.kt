@@ -49,7 +49,7 @@ class ChatListAdapter(val chats:List<ContactsModel>, val fragment: Fragment) : R
        holder.userNameTxt.text = chats[position].uname
        holder.userStatusTxt.text = chats[position].status
        //holder.lastMessageTime.text = chats[position].
-        val fileName = MainActivity.auth.currentUser?.uid+".jpg"
+        val fileName =  chats[position].uid+".jpg"
         val imageUri =  FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
 
         imageUri.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {

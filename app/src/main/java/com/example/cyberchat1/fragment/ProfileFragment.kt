@@ -63,18 +63,9 @@ class ProfileFragment : Fragment() {
 
 
         val fileName = MainActivity.auth.currentUser?.uid+".jpg"
-
         val refStorage = FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
-
         refStorage.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
-
-
-
             Glide.with(this).load(it).into(user_profile_image)
-
-
-
-
         })
 
 

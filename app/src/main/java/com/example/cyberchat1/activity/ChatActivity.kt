@@ -2,23 +2,28 @@ package com.example.cyberchat1.activity
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.cyberchat1.R
 
 import com.example.cyberchat1.adapters.ChatAdapter
 
 import com.example.cyberchat1.model.MessagesModel
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 
 import java.text.SimpleDateFormat
 
@@ -46,6 +51,7 @@ class ChatActivity : AppCompatActivity() {
 
         val contactNameChat : TextView = findViewById(R.id.contactNameChat)
         val sendMessageButton : FloatingActionButton =findViewById(R.id.sendMessageButton)
+        val userProfilePhoto : ImageView = findViewById(R.id.userProfilePhoto)
 
         contactPhoneChat= findViewById(R.id.contactPhoneChat)
         recyclerViewMessages= findViewById(R.id.recyclerViewMessages)
@@ -75,6 +81,15 @@ class ChatActivity : AppCompatActivity() {
 
         }
         //--
+
+
+        val fileName = contactUID+".jpg"
+        val refStorage = FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
+        refStorage.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
+            Glide.with(this).load(it).into(userProfilePhoto)
+        })
+
+
 
         Log.d(TAG,"you called retrieve Message")
         retrieveMessage()
