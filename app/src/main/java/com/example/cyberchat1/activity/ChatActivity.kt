@@ -1,7 +1,7 @@
 package com.example.cyberchat1.activity
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
+
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,6 +29,8 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 
 import java.util.*
+
+private const val TAG = "ChatActivity"
 
 class ChatActivity : AppCompatActivity() {
 
@@ -177,8 +179,8 @@ class ChatActivity : AppCompatActivity() {
         /*
         * Retrieve Messages from massages where sub child ("from") == Current phone Number and ("to") == selected phone number
         *  */
-
-       db.reference.child("messages").addChildEventListener(
+        var messageOldID:String =""
+     val retrieveFrom =  db.reference.child("messages").addChildEventListener(
            object: ChildEventListener{
                @SuppressLint("NotifyDataSetChanged")
                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -196,6 +198,9 @@ class ChatActivity : AppCompatActivity() {
 
                        chatAdapter.notifyDataSetChanged()
                        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+
+                       messageOldID = previousChildName.toString()
+
                    }
                    else
                    {
@@ -207,26 +212,42 @@ class ChatActivity : AppCompatActivity() {
 
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
+                   Log.d(TAG,"onChildChanged action start---")
 
                    if( (snapshot.child("fromUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("toUID").value.toString() == contactUID ) || (snapshot.child("toUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("fromUID").value.toString() == contactUID))
                    {
 
-                       if(snapshot.child("message").value.toString() !=null)
+                       if(snapshot.child("message").value.toString() !=null && snapshot.child("message").value.toString() !="null")
                        {
-                           // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
-                           Log.d(TAG,"there is a Message found below")
-                           Log.d(TAG,snapshot.toString())
+                           val messageid = snapshot.key.toString()
 
-                           MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+                           if(messageid != messageOldID)
+                           {
+                               Log.d(TAG,"new ID = $messageid  old ID = $messageOldID")
 
-                           chatAdapter.notifyDataSetChanged()
-                           recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+                               Log.d(TAG,"meesage ID = $messageid and $previousChildName")
+                               // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
+                               Log.d(TAG,"there is a Message found below by onChildChanged")
+                               Log.d(TAG,snapshot.toString())
+
+                               MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+
+                               chatAdapter.notifyDataSetChanged()
+                               recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+                           }
+
+
+
+                           messageOldID = messageid
+
                        }
 
 
 
 
                    }
+
+
 
                }
 
@@ -247,6 +268,10 @@ class ChatActivity : AppCompatActivity() {
 
            } //end ChildEventListener
        )
+
+
+
+
 
 
 
