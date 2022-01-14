@@ -146,7 +146,7 @@ class ChatActivity : AppCompatActivity() {
         val messageID : String = db.getReference("messages").push().key.toString()
 
         // add message to message list
-        MessagesList.add(MessagesModel(messageSender,MainActivity.auth.currentUser?.uid.toString(),textMessage.text.toString(),messageReceiver,contactUID,messageID,currentTime,currentDate,"URL for File","sent"))
+       // MessagesList.add(MessagesModel(messageSender,MainActivity.auth.currentUser?.uid.toString(),textMessage.text.toString(),messageReceiver,contactUID,messageID,currentTime,currentDate,"URL for File","sent"))
 
 
         // send to firebase++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -168,8 +168,8 @@ class ChatActivity : AppCompatActivity() {
 
 
       // retrieveMessage()
-        chatAdapter.notifyDataSetChanged()
-        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+      //  chatAdapter.notifyDataSetChanged()
+      //  recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
 
     }
 
@@ -210,6 +210,7 @@ class ChatActivity : AppCompatActivity() {
 
                }
 
+               @SuppressLint("NotifyDataSetChanged")
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
                    Log.d(TAG,"onChildChanged action start---")

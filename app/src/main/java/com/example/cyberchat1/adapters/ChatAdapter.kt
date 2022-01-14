@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cyberchat1.R
@@ -17,7 +16,6 @@ import com.example.cyberchat1.activity.MainActivity
 import com.example.cyberchat1.model.MessagesModel
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
-import java.lang.Exception
 
 private const val TAG = "ChatAdapter"
 // class name       parameter list type          inherit RecyclerAdapter
