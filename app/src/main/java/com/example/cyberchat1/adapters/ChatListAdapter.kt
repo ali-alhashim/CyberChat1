@@ -65,6 +65,7 @@ class ChatListAdapter(val chats:List<ContactsModel>, val fragment: Fragment) : R
             intent.putExtra("ContactName", chats[position].uname)
             intent.putExtra("PhoneNumber",chats[position].phoneNumber)
             intent.putExtra("uid", chats[position].uid)
+            intent.putExtra("status",chats[position].status.toString())
             fragment.context?.startActivity(intent)
         }
 

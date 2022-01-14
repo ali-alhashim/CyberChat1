@@ -24,6 +24,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.lang.Exception
 
 import java.text.SimpleDateFormat
 
@@ -36,6 +37,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var db: FirebaseDatabase
     private lateinit var    contactPhoneChat :TextView
     private lateinit var contactUID : String
+    private lateinit var contactStatus:String
     private lateinit var chatAdapter : ChatAdapter
 
     private val MessagesList = mutableListOf<MessagesModel>()
@@ -52,6 +54,7 @@ class ChatActivity : AppCompatActivity() {
         val contactNameChat : TextView = findViewById(R.id.contactNameChat)
         val sendMessageButton : FloatingActionButton =findViewById(R.id.sendMessageButton)
         val userProfilePhoto : ImageView = findViewById(R.id.userProfilePhoto)
+        val contactStatusChat : TextView = findViewById(R.id.contactStatusChat)
 
         contactPhoneChat= findViewById(R.id.contactPhoneChat)
         recyclerViewMessages= findViewById(R.id.recyclerViewMessages)
@@ -60,7 +63,7 @@ class ChatActivity : AppCompatActivity() {
 
         textMessage = findViewById(R.id.textMessage)
 
-        chatAdapter = ChatAdapter(MessagesList)
+        chatAdapter = ChatAdapter(MessagesList,this)
 
         // assign to chatAdapter
         recyclerViewMessages.adapter = chatAdapter
@@ -78,6 +81,7 @@ class ChatActivity : AppCompatActivity() {
             contactNameChat.text = extras.getString("ContactName")
             contactPhoneChat.text =extras.getString("PhoneNumber")?.replace("\\s".toRegex(),"")
             contactUID = extras.getString("uid").toString()
+            contactStatus = extras.getString("status").toString()
 
         }
         //--
@@ -86,8 +90,17 @@ class ChatActivity : AppCompatActivity() {
         val fileName = contactUID+".jpg"
         val refStorage = FirebaseStorage.getInstance().reference.child("UsersProfilePhoto/$fileName")
         refStorage.downloadUrl.addOnSuccessListener(OnSuccessListener<Uri> {
-            Glide.with(this).load(it).into(userProfilePhoto)
+            try {
+                Glide.with(this).load(it).into(userProfilePhoto)
+            }
+            catch (e:Exception)
+            {
+                Log.d(TAG,e.toString())
+            }
+
         })
+
+        contactStatusChat.text = contactStatus
 
 
 
@@ -130,7 +143,7 @@ class ChatActivity : AppCompatActivity() {
         val messageID : String = db.getReference("messages").push().key.toString()
 
         // add message to message list
-        MessagesList.add(MessagesModel(messageSender,textMessage.text.toString(),messageReceiver,messageID,currentTime,currentDate,"URL for File","online"))
+        MessagesList.add(MessagesModel(messageSender,MainActivity.auth.currentUser?.uid.toString(),textMessage.text.toString(),messageReceiver,contactUID,messageID,currentTime,currentDate,"URL for File","sent"))
 
 
         // send to firebase++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -177,8 +190,8 @@ class ChatActivity : AppCompatActivity() {
                        // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
                        Log.d(TAG,"there is a Message found below")
                        Log.d(TAG,snapshot.toString())
-
-                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"URL for File","online"))
+                                                                      //from                                 from UID                                   message                                           to                                            to UID                                message key
+                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
 
                        chatAdapter.notifyDataSetChanged()
                        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
@@ -199,7 +212,7 @@ class ChatActivity : AppCompatActivity() {
                        Log.d(TAG,"there is a Message found below")
                        Log.d(TAG,snapshot.toString())
 
-                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"URL for File","online"))
+                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
 
                        chatAdapter.notifyDataSetChanged()
                        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)

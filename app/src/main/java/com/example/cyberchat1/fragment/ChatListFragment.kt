@@ -76,9 +76,23 @@ class ChatListFragment : Fragment()
 
 
 
+                    if(MainActivity.auth.currentUser?.uid.toString() == chat.child("toUID").value.toString() || MainActivity.auth.currentUser?.uid.toString() == chat.child("fromUID").value.toString())
+                    {
+                        if(MainActivity.auth.currentUser?.uid.toString() == chat.child("fromUID").value.toString())
+                        {
+                            chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),"online"))
+                            chatListAdapter.notifyDataSetChanged()
+                            break
+                        }
+                        else
+                        {
+                            //chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),"online"))
+                        }
 
-                    chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),"online"))
-                    chatListAdapter.notifyDataSetChanged()
+
+                        //break
+                    }
+
                 }
             }
 

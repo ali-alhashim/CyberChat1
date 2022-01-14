@@ -54,6 +54,7 @@ class ContactListAdapter(private val contacts : List<ContactsModel>, val context
             intent.putExtra("ContactName", holder.contactName.text.toString())
             intent.putExtra("PhoneNumber", holder.contactPhone.text .toString())
             intent.putExtra("uid",contact.uid.toString())
+            intent.putExtra("status",contact.status.toString())
             context.startActivity(intent)
         }
 

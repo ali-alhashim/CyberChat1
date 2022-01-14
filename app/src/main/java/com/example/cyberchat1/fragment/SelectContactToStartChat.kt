@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cyberchat1.R
 import com.example.cyberchat1.adapters.ContactListAdapter
 import com.example.cyberchat1.model.ContactsModel
-import android.content.ContentValues.TAG
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+private const val TAG = "SelectContact"
 
 class SelectContactToStartChat : Fragment() {
 
@@ -181,7 +182,7 @@ class SelectContactToStartChat : Fragment() {
 
                             contactList.add(ContactsModel( contactName, uidResult,  phoneNumber,uidResult, contact.child("status").value.toString()))
 
-                            Log.d(TAG,"we add $contactName with $phoneNumber UID = $uidResult")
+                            Log.d(TAG,"we add $contactName with $phoneNumber UID = $uidResult with status "+contact.child("status").value.toString())
 
                             contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
 
