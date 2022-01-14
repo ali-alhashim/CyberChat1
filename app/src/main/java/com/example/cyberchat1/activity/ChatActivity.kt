@@ -105,6 +105,7 @@ class ChatActivity : AppCompatActivity() {
 
 
         Log.d(TAG,"you called retrieve Message")
+
         retrieveMessage()
 
 
@@ -206,6 +207,7 @@ class ChatActivity : AppCompatActivity() {
 
                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
 
+
                    if( (snapshot.child("fromUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("toUID").value.toString() == contactUID ) || (snapshot.child("toUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("fromUID").value.toString() == contactUID))
                    {
 
@@ -239,7 +241,11 @@ class ChatActivity : AppCompatActivity() {
                override fun onCancelled(error: DatabaseError) {
                    Log.d(TAG,"function on child cancelled called ")
                }
-           }
+
+
+
+
+           } //end ChildEventListener
        )
 
 
