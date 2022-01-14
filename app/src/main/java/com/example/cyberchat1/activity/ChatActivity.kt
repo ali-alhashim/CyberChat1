@@ -145,8 +145,6 @@ class ChatActivity : AppCompatActivity() {
         // generate unique key for each message
         val messageID : String = db.getReference("messages").push().key.toString()
 
-        // add message to message list
-       // MessagesList.add(MessagesModel(messageSender,MainActivity.auth.currentUser?.uid.toString(),textMessage.text.toString(),messageReceiver,contactUID,messageID,currentTime,currentDate,"URL for File","sent"))
 
 
         // send to firebase++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -167,9 +165,6 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-      // retrieveMessage()
-      //  chatAdapter.notifyDataSetChanged()
-      //  recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
 
     }
 
@@ -180,7 +175,7 @@ class ChatActivity : AppCompatActivity() {
         * Retrieve Messages from massages where sub child ("from") == Current phone Number and ("to") == selected phone number
         *  */
         var messageOldID:String =""
-     val retrieveFrom =  db.reference.child("messages").addChildEventListener(
+        val retrieveFrom =  db.reference.child("messages").addChildEventListener(
            object: ChildEventListener{
                @SuppressLint("NotifyDataSetChanged")
                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -194,7 +189,7 @@ class ChatActivity : AppCompatActivity() {
                        Log.d(TAG,"there is a Message found below")
                        Log.d(TAG,snapshot.toString())
                                                                       //from                                 from UID                                   message                                           to                                            to UID                                message key
-                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("fromUID").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
 
                        chatAdapter.notifyDataSetChanged()
                        recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
@@ -231,7 +226,7 @@ class ChatActivity : AppCompatActivity() {
                                Log.d(TAG,"there is a Message found below by onChildChanged")
                                Log.d(TAG,snapshot.toString())
 
-                               MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+                               MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),snapshot.child("fromUID").value.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
 
                                chatAdapter.notifyDataSetChanged()
                                recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
