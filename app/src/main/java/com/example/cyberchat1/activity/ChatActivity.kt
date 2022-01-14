@@ -172,7 +172,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun retrieveMessage()
     {
-        //MessagesList.clear()
+
         /*
         * Retrieve Messages from massages where sub child ("from") == Current phone Number and ("to") == selected phone number
         *  */
@@ -208,14 +208,22 @@ class ChatActivity : AppCompatActivity() {
 
                    if( (snapshot.child("fromUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("toUID").value.toString() == contactUID ) || (snapshot.child("toUID").value.toString() == MainActivity.auth.currentUser?.uid.toString() && snapshot.child("fromUID").value.toString() == contactUID))
                    {
-                       // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
-                       Log.d(TAG,"there is a Message found below")
-                       Log.d(TAG,snapshot.toString())
 
-                       MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+                       if(snapshot.child("message").value.toString() !=null)
+                       {
+                           // if the Message from me to my selected contact or if message from my selected contact to me retrieve this message
+                           Log.d(TAG,"there is a Message found below")
+                           Log.d(TAG,snapshot.toString())
 
-                       chatAdapter.notifyDataSetChanged()
-                       recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+                           MessagesList.add(MessagesModel(snapshot.child("from").value.toString(),MainActivity.auth.currentUser?.uid.toString(),snapshot.child("message").value.toString(),snapshot.child("to").value.toString(),snapshot.child("toUID").value.toString(),snapshot.key.toString(),snapshot.child("time").value.toString(),snapshot.child("date").value.toString(),"fileName",snapshot.child("status").value.toString()))
+
+                           chatAdapter.notifyDataSetChanged()
+                           recyclerViewMessages.smoothScrollToPosition(chatAdapter.itemCount)
+                       }
+
+
+
+
                    }
 
                }
