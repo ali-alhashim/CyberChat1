@@ -108,7 +108,7 @@ class ChatListFragment : Fragment()
 
 
 
-                                db.getReference("users").child(chat.child("fromUID").value.toString()).child("status").addListenerForSingleValueEvent(object : ValueEventListener{
+                                db.getReference("users").child(chat.child("toUID").value.toString()).child("status").addListenerForSingleValueEvent(object : ValueEventListener{
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                        val fetchedValue  = snapshot.value.toString()
 
