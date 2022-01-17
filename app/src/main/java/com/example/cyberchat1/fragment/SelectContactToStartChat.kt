@@ -52,6 +52,9 @@ class SelectContactToStartChat : Fragment() {
 
         val searchContactEditText : EditText = view.findViewById(R.id.searchContactEditText)
 
+
+
+
         // call for first time without filter
         getContactList("")
 
@@ -168,6 +171,7 @@ class SelectContactToStartChat : Fragment() {
 
             FirebaseDatabase.getInstance().reference.child("users").addValueEventListener(object :
                 ValueEventListener {
+                @SuppressLint("NotifyDataSetChanged")
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     for (contact in snapshot.children)
@@ -184,8 +188,8 @@ class SelectContactToStartChat : Fragment() {
 
                             Log.d(TAG,"we add $contactName with $phoneNumber UID = $uidResult with status "+contact.child("status").value.toString())
 
-                            contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
 
+                            contactListRecyclerView.adapter = ContactListAdapter(contactList,requireContext())
 
                             ContactListAdapter(contactList,requireContext()).notifyDataSetChanged()
 
@@ -212,7 +216,10 @@ class SelectContactToStartChat : Fragment() {
     }
 
 
+    override fun onPause() {
 
+        super.onPause()
+    }
 
 
 
