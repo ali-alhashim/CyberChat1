@@ -46,6 +46,8 @@ class ChatListFragment : Fragment()
 
         val selectContactNewChatBtn : FloatingActionButton = view.findViewById(com.example.cyberchat1.R.id.selectContactNewChatBtn)
 
+        db =  FirebaseDatabase.getInstance()
+
         selectContactNewChatBtn.setOnClickListener()
         {
             Log.d(TAG,"you clicked on start new chat")
@@ -82,15 +84,49 @@ class ChatListFragment : Fragment()
                             {
 
 
-                                chatList.add(ContactsModel(chat.child("from").value.toString(),chat.child("fromUID").value.toString(),chat.child("from").value.toString(),chat.child("fromUID").value.toString(),"online"))
-                                chatListAdapter.notifyDataSetChanged()
+                                db.getReference("users").child(chat.child("fromUID").value.toString()).child("status").addListenerForSingleValueEvent(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                       val fetchedValue  = snapshot.value.toString()
+
+                                        chatList.add(ContactsModel(chat.child("from").value.toString(),chat.child("fromUID").value.toString(),chat.child("from").value.toString(),chat.child("fromUID").value.toString(),fetchedValue))
+                                        chatListAdapter.notifyDataSetChanged()
+
+
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
+
                                 break
                             }
                             else
                             {
-                                chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),"online"))
-                                chatListAdapter.notifyDataSetChanged()
+
+
+
+                                db.getReference("users").child(chat.child("fromUID").value.toString()).child("status").addListenerForSingleValueEvent(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                       val fetchedValue  = snapshot.value.toString()
+
+                                        chatList.add(ContactsModel(chat.child("to").value.toString(),chat.child("toUID").value.toString(),chat.child("to").value.toString(),chat.child("toUID").value.toString(),fetchedValue))
+                                        chatListAdapter.notifyDataSetChanged()
+
+
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
                                 break
+
+
                             }
 
 
